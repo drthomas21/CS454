@@ -1,0 +1,10 @@
+##### 1. Write a function that prints a word and its reflection
+	reflection('hello'); //hello olleh
+
+##### 2. Write a function that takes 3 arguments, (start, end, spread), and then prints out the pattern)
+	pattern(2, 11, 3); //2, 5, 8, 11
+
+##### 3. Write a function that adds all elements in the array
+	addAll([1,3,
+
+
