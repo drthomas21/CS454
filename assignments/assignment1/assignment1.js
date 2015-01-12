@@ -118,10 +118,79 @@ objectSize(dog);
  * @param number tip
  */
 var tipCalculator = function(list,tip) {
+	var totalPaid = 0;
 	var response = [];
 	/**
 	 * Lets make sure we have the correct arguments
 	 */
-}
+	if(typeof(list.forEach) == "undefined" || isNaN(tip)) {
+		console.log("Please pass the proper arguments");
+		console.log('');
+		return
+	}
+	
+	list.forEach(function(Item) {
+		/**
+		 * Lets make sure we have the correct properties
+		 */
+		if(typeof(Item.name) == "string" && !isNaN(Item.bill)) {
+			var paid = Math.round(Item.bill * (1+(tip/100))) ;
+			response.push({name: Item.name, paid: paid + ".00"});
+			totalPaid += paid;
+		} else {
+			console.log("The list is missing properties(s)");
+			console.log('');
+			return;
+		}
+	});
+	
+	totalPaid += ".00";
+	console.log("Question 6: totalPaid:" , totalPaid, ",\r\n", response);
+	console.log('');
+};
+
+var dinner = [
+  { name: 'Cyd', bill: 22.54 },
+  { name: 'Andrea', bill: 18.39 },
+  { name: 'Andy', bill: 15.29 },
+  { name: 'Stevi', bill: 25.11 }
+];
+tipCalculator(dinner,20);
 
 //Question 7
+/**
+ * @param number number
+ */
+var getFibonacci = function(maxLength) {
+	var response=[];
+	var fib = [1,1];
+	var helper = function(list,maxLength) {
+		var num = list[list.length-1] + list[list.length-2];
+		list.push(num);
+		if(list.length < maxLength) {
+			list = helper(list,maxLength);
+		}
+		
+		return list;
+	};
+	/**
+	 * Lets make sure we have the correct argument
+	 */
+	if(isNaN(maxLength)) {
+		console.log("Please pass in the proper argument");
+		console.log('');
+		return;
+	}
+	
+	if(fib.length <= maxLength) {
+		fib = helper(fib,maxLength);
+	}
+	
+	fib.slice(0,maxLength).forEach(function(value) {
+		response.push(value);
+	});	
+	
+	console.log("Question 7: ", response);
+	console.log('');
+};
+getFibonacci(10);
