@@ -118,8 +118,8 @@ objectSize(dog);
  * @param number tip
  */
 var tipCalculator = function(list,tip) {
-	var totalPaid = 0;
 	var response = [];
+	response.totalPaid = 0;
 	/**
 	 * Lets make sure we have the correct arguments
 	 */
@@ -134,9 +134,9 @@ var tipCalculator = function(list,tip) {
 		 * Lets make sure we have the correct properties
 		 */
 		if(typeof(Item.name) == "string" && !isNaN(Item.bill)) {
-			var paid = Math.round(Item.bill * (1+(tip/100))) ;
-			response.push({name: Item.name, paid: paid + ".00"});
-			totalPaid += paid;
+			var paid = Math.round(Item.bill * (1+(tip/100))).toFixed(2) ;
+			response.push({name: Item.name, paid: paid});
+			response.totalPaid = (parseFloat(response.totalPaid) + parseFloat(paid)).toFixed(2);
 		} else {
 			console.log("The list is missing properties(s)");
 			console.log('');
@@ -144,8 +144,7 @@ var tipCalculator = function(list,tip) {
 		}
 	});
 	
-	totalPaid += ".00";
-	console.log("Question 6: totalPaid:" , totalPaid, ",\r\n", response);
+	console.log("Question 6: ", response);
 	console.log('');
 };
 
