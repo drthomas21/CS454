@@ -57,7 +57,7 @@
     };
 
 
-##### 6.  Write a **recursive** function that will accept an arg n and return an array of the first n number of fibonacci numbers.
+##### 7.  Write a **recursive** function that will accept an arg n and return an array of the first n number of fibonacci numbers.
 
 *Fibonacci numbers are: 1, 1, 2, 3, 5, 8, 13, 21, 35... where the next number  is always equal to the sum of the previous two numbers.*
 
