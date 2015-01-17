@@ -76,10 +76,13 @@ addAll([1,32,53,2,455,2,31,45,56,6,88,34]);
 var fooBar = function() {
 	var response = [];
 	for(var i = 1; i <= 100; i++) {
-		if(i % 3 == 0) {
-			response[i] = "Foo";
+		response[i] = ""
+		if(i % 3 == 0 && i % 7 == 0) {
+			response[i] = "FooBar";
 		} else if(i % 7 == 0) {
 			response[i] = "Bar";
+		} else if(i % 3 == 0) {
+			response[i] = "Foo";
 		} else {
 			response[i] = i
 		}
