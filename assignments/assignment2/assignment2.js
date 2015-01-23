@@ -1,4 +1,8 @@
-//Question 1
+/**
+ * 
+ * Question 1
+ * 
+ */
 String.prototype.toCamelCase = function() {
 	var camelCase = function(str,char) {
 		var parts = str.split(char);
@@ -24,7 +28,11 @@ console.log("'hello_world' to " + "hello_world".toCamelCase());
 console.log("'hello-world' to " + "hello-world".toCamelCase());
 console.log('');
 
-//Question 2
+/**
+ * 
+ * Question 2
+ * 
+ */
 Array.prototype.convertToObject = function() {
 	var object = new Object();
 	var that = this;
@@ -62,7 +70,11 @@ console.log("[['media', 'facebook','twitter'], ['company', 'github'], ['likes']]
 console.log("[['media', ['facebook','twitter']], ['company', 'github']] to " , [['media', ['facebook','twitter']], ['company', 'github']].convertToObject());
 console.log('');
 
-//Question 3
+/**
+ * 
+ * Question 3
+ * 
+ */
 Object.prototype.convertToArray = function() {
 	var array = [];
 	var that = this;
@@ -86,7 +98,11 @@ console.log("{ media: 'facebook', company: 'github', likes: function() {return 1
 console.log("{ media: 'facebook', company: function() { return [1,2,3,4]; }, likes: '48,445' } to " , { media: 'facebook', company: function() { return [1,2,3,4]; }, likes: '48,445' }.convertToArray());
 console.log('');
 
-//Question 4
+/**
+ * 
+ * Question 4
+ * 
+ */
 var fruitNinja = function() {
 	var score = 0;
 	return {
@@ -121,7 +137,15 @@ player.missed();
 console.log("Player score: " + player.getScore());
 console.log('');
 
-//Question 5
+/**
+ * 
+ * Question 5
+ * 
+ */
+
+/**
+ * Shape
+ */
 var Shape = function(sides){
 	this.sides = sides;
 };
@@ -145,13 +169,27 @@ Shape.prototype.getSides = function() {
 	return str.join("\r\n");
 }
 
+/**
+ * Quadrilateral
+ */
+var Quadrilateral = function(side1,side2,side3,side4) {
+	this.sides = [side1,side2,side3,side4];
+	sides.sort();
+};
+Quadrilateral.prototype = new Side();
+
+/**
+ * Diamond
+ */
 var Diamond = function(side1,side2) {
 	this.sides = [side1,side1,side2,side2];
 };
-Diamond.prototype = new Shape();
+
+Diamond.prototype = new Quadrilateral();
 Diamond.prototype.getArea = function() {
 	return this.sides[0] * this.sides[2];
 }
+
 
 console.log("Question 5:");
 var shape = new Shape([2,2,2]);
@@ -167,8 +205,12 @@ console.log("Area of Diamond: " + diamond.getArea());
 console.log("Perimeter of Diamond: " + diamond.getPerimeter());
 console.log('');
 
-//Question 6
-function toEvenOdd(number) {
+/**
+ * 
+ * Question 6
+ * 
+ */
+function isEvenOdd(number,output) {
 	if(number == 0) {
 		output("Even");
 	} else {
@@ -176,21 +218,23 @@ function toEvenOdd(number) {
 	}
 }
 
-function isEvenOdd(number,convert,output) {
+function evenOddMod(number,convert,output) {
 	var number = number % 2;
 	convert(number,output);
 }
 
-function determineIfEvenOdd(number) {
-	mod(number,convert,output);
+function printAnswer(number) {
+	evenOddMod(number,isEvenOdd,console.log)
 }
 
 console.log("Question 6:");
 console.log("Checking 5 -");
-determineIfEvenOdd(5,isEvenOdd,toEvenOdd,console.log);
+printAnswer(5);
 console.log("Checking 10 -");
-determineIfEvenOdd(10,isEvenOdd,toEvenOdd,console.log);
+printAnswer(10);
 console.log("Checking 1 -");
-determineIfEvenOdd(1,isEvenOdd,toEvenOdd,console.log);
+printAnswer(1);
 console.log("Checking 13 -");
-determineIfEvenOdd(13,isEvenOdd,toEvenOdd,console.log);
+printAnswer(13);
+console.log("Checking 4 -");
+printAnswer(4);
