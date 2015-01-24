@@ -174,9 +174,9 @@ Shape.prototype.getSides = function() {
  */
 var Quadrilateral = function(side1,side2,side3,side4) {
 	this.sides = [side1,side2,side3,side4];
-	sides.sort();
+	this.sides.sort();
 };
-Quadrilateral.prototype = new Side();
+Quadrilateral.prototype = new Shape();
 
 /**
  * Diamond
