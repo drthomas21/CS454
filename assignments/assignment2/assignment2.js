@@ -78,7 +78,6 @@ console.log('');
 Object.prototype.convertToArray = function() {
 	var array = [];
 	var that = this;
-	var object = JSON.parse(JSON.stringify(this));
 	Object.keys(this).map(function (key) {
 		if(typeof(that[key]) != "function") {
 			array.push([key,that[key]]);
@@ -148,6 +147,7 @@ console.log('');
  */
 var Shape = function(sides){
 	this.sides = sides;
+	this.validateSides();
 };
 Shape.prototype.getArea = function() {
 	return 0;
@@ -167,6 +167,17 @@ Shape.prototype.getSides = function() {
 	}
 	
 	return str.join("\r\n");
+};
+Shape.prototype.validateSides = function() {
+	if(!this.sides) {
+		return;
+	}
+
+	this.sides.forEach(function(number) {
+		if(isNaN(number)) {
+			console.log(number + " is not a number, please input a number for sides");
+		}
+	});
 }
 
 /**
@@ -175,14 +186,30 @@ Shape.prototype.getSides = function() {
 var Quadrilateral = function(side1,side2,side3,side4) {
 	this.sides = [side1,side2,side3,side4];
 	this.sides.sort();
+	this.validateSides();
 };
 Quadrilateral.prototype = new Shape();
+Quadrilateral.prototype.getArea = function() {
+	//If Square or Rectangle
+	if(this.sides[0] == this.sides[1] && this.sides[2] == this.sides[3]) {
+		return this.sides[0] * this.sides[2];
+	} else {
+		return "I do not know the formula for this shape, please build an object for this type of shape";
+	}
+};
 
 /**
  * Diamond
  */
-var Diamond = function(side1,side2) {
+var Diamond = function(side1,side2,degree) {
 	this.sides = [side1,side1,side2,side2];
+	this.angle = angle;
+
+	if(isNaN(this.angle)) {
+		console.log("Missing the angle, please pass the angle as a degree");
+	}
+
+	this.validateSides();
 };
 
 Diamond.prototype = new Quadrilateral();
