@@ -201,31 +201,33 @@ Quadrilateral.prototype.getArea = function() {
 /**
  * Diamond
  */
-var Diamond = function(side1,side2,degree) {
+var Diamond = function(side1,side2,diag1,diag2) {
 	this.sides = [side1,side1,side2,side2];
-	this.angle = angle;
-
-	if(isNaN(this.angle)) {
-		console.log("Missing the angle, please pass the angle as a degree");
-	}
+	this.diags = [diag1,diag2];
 
 	this.validateSides();
+	
+	this.diags.forEach(function(number) {
+		if(isNaN(number)) {
+			console.log(number + " is not a number, please input a number for sides");
+		}
+	});
 };
 
 Diamond.prototype = new Quadrilateral();
 Diamond.prototype.getArea = function() {
-	return this.sides[0] * this.sides[2];
+	return (this.diags[0] * this.diags[1])/2;
 }
 
 
 console.log("Question 5:");
-var shape = new Shape([2,2,2]);
+var shape = new Shape([5,42,1,2]);
 console.log("Shape");
 console.log(shape.getSides());
 console.log("Area of Shape: " + shape.getArea());
 console.log("Perimeter of Shape: " + shape.getPerimeter());
 console.log('');
-var diamond = new Diamond(2,4);
+var diamond = new Diamond(2,4,3,4);
 console.log("Diamond");
 console.log(diamond.getSides());
 console.log("Area of Diamond: " + diamond.getArea());
