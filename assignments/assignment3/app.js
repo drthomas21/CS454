@@ -29,6 +29,7 @@ var SnowMan = function() {
 	var showGui = true;
 	var words = [];
 	var usedWords = [];
+	var word = null;
 	var maxGuesses = 5;
 	
 	/**
@@ -62,7 +63,7 @@ var SnowMan = function() {
 	};
 	
 	var autoLoop = function() {
-		var word = new Word.Word();
+		word = new Word.Word();
 		word.word = getWord();
 		word.word = word.word.toLowerCase();
 		
@@ -109,8 +110,10 @@ var SnowMan = function() {
 				name: "letter",
 				message: "Which letter to guess...",
 				validate: function(input) {
-					if(typeof(input.charAt) != "function" || input.replace(/[A-Za-z]+/,'').length > 0 || input.length > 1) {
+					if(typeof(input.charAt) != "function" || input.replace(/[A-Za-z]+/,'').length > 0 || input.length > 1 || input.length == 0) {
 						return "Please input a single letter";
+					} else if(word.getGuesses().join('').indexOf(input) >= 0) {
+						return "You have already guess that letter, try again";						
 					}
 					return true;
 				}
