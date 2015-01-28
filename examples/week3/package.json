@@ -1,0 +1,14 @@
+{
+  "name": "FileReader",
+  "version": "1.0.0",
+  "description": "Demo",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dathomas",
+  "license": "MIT",
+  "dependencies": {
+    "yargs": "~1.3.3"
+  }
+}
