@@ -21,6 +21,11 @@ var args = yargs.usage("Usage node app.js <arguments>")
 				})
 				.argv;
 
+if (args.help) {
+  yargs.showHelp();
+  process.exit(0);
+}
+
 var SnowMan = function() {
 	/**
 	 * Class Variables
@@ -36,6 +41,7 @@ var SnowMan = function() {
 	 * Private Functions
 	 */
 	var loadWords = function() {
+		console.log(dictPath);
 		var data = fs.readFileSync(dictPath,{encoding: 'utf8'});
 		data = data.replace(/[\r\n\s]+/g,'|');
 		words = data.split('|');
@@ -176,11 +182,12 @@ var SnowMan = function() {
 	 */
 	this.configure = function(path,gui) {
 		dictPath = (path && typeof(path.charAt) == "function") ? path : dictPath;
-		showGui = (typeof(gui) == "boolean") ? gui : showGui;
+		showGui = (typeof(gui) == "boolean") ? !gui : showGui;
 	};
 	
 	this.run = function() {
 		loadWords();
+		
 		if(!showGui) {
 			snowmanWidget = null; 
 		}
@@ -191,5 +198,5 @@ var SnowMan = function() {
 };
 
 var app = new SnowMan();
-app.configure(args.path,args.nogui);
+app.configure(args.dict,args.nogui);
 app.run();
