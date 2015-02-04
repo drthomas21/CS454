@@ -21,6 +21,11 @@ var args = yargs.usage("Usage node app.js <arguments>")
 				})
 				.argv;
 
+if (args.help) {
+  yargs.showHelp();
+  process.exit(0);
+}
+
 var SnowMan = function() {
 	/**
 	 * Class Variables
@@ -29,12 +34,14 @@ var SnowMan = function() {
 	var showGui = true;
 	var words = [];
 	var usedWords = [];
+	var word = null;
 	var maxGuesses = 5;
 	
 	/**
 	 * Private Functions
 	 */
 	var loadWords = function() {
+		console.log(dictPath);
 		var data = fs.readFileSync(dictPath,{encoding: 'utf8'});
 		data = data.replace(/[\r\n\s]+/g,'|');
 		words = data.split('|');
@@ -62,7 +69,7 @@ var SnowMan = function() {
 	};
 	
 	var autoLoop = function() {
-		var word = new Word.Word();
+		word = new Word.Word();
 		word.word = getWord();
 		word.word = word.word.toLowerCase();
 		
@@ -109,8 +116,10 @@ var SnowMan = function() {
 				name: "letter",
 				message: "Which letter to guess...",
 				validate: function(input) {
-					if(typeof(input.charAt) != "function" || input.replace(/[A-Za-z]+/,'').length > 0 || input.length > 1) {
+					if(typeof(input.charAt) != "function" || input.replace(/[A-Za-z]+/,'').length > 0 || input.length > 1 || input.length == 0) {
 						return "Please input a single letter";
+					} else if(word.getGuesses().join('').indexOf(input) >= 0) {
+						return "You have already guess that letter, try again";						
 					}
 					return true;
 				}
@@ -173,11 +182,12 @@ var SnowMan = function() {
 	 */
 	this.configure = function(path,gui) {
 		dictPath = (path && typeof(path.charAt) == "function") ? path : dictPath;
-		showGui = (typeof(gui) == "boolean") ? gui : showGui;
+		showGui = (typeof(gui) == "boolean") ? !gui : showGui;
 	};
 	
 	this.run = function() {
 		loadWords();
+		
 		if(!showGui) {
 			snowmanWidget = null; 
 		}
@@ -188,5 +198,5 @@ var SnowMan = function() {
 };
 
 var app = new SnowMan();
-app.configure(args.path,args.nogui);
+app.configure(args.dict,args.nogui);
 app.run();
