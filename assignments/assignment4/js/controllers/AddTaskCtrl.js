@@ -17,7 +17,7 @@ angular.module('assignment').controller('AddTaskCtrl',['$scope','TaskContainer',
 	};
 	$scope.submitForm = function() {
 		if($scope.task.name.length == 0) {
-			$scope.task.name = "New Task";
+			$scope.task.name = "New Task " + (TaskContainer.getTasks().length+1);
 		}
 		$scope.task.hours = parseFloat($scope.task.hours);
 		TaskContainer.createTask($scope.task);

@@ -3,6 +3,10 @@ angular.module('assignment').controller('AddEmployeeCtrl',['$scope','EmployeeCon
 	var newObject = function() {
 		$scope.employee = new Employee();
 	};
+	
+	$scope.filterName = function() {
+		$scope.employee.name = $scope.employee.name.replace(/[^A-Za-z ]+/,'');
+	};
 
 	$scope.submitForm = function() {
 		if($scope.employee.name == "") {

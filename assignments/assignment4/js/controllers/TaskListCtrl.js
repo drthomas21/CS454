@@ -13,11 +13,9 @@ angular.module('assignment').controller('TaskListCtrl',['$scope','TaskContainer'
 	$scope.taskList = [];
 	$scope.employeeList = EmployeeContainer.getEmployees();
 	
-	$scope.assignTask = function(task,taskId) {
-		var object = TaskContainer.getTask(taskId);
-		object.employee = task.employee;
-		if(!object.employee == "") {
-			object.assigned();
+	$scope.assignTask = function(task) {
+		if(!task.employee == "") {
+			task.assigned();
 		}
 		
 		buildTasks();

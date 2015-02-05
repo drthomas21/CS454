@@ -15,11 +15,11 @@ angular.module('assignment').controller('EmployeeCtrl',['$scope','EmployeeContai
 	};
 	
 	$scope.getTotalHours = function(employeeId) {
-		var list = $scope.getTaskByEmployee(employeeId);
+		var tasks = $scope.getTaskByEmployee(employeeId);
 		var total = 0;
-		for(var i = 0; i < list.length; i++) {
-			if(list[i].employee == employeeId) {
-				total+=list[i].hours;
+		for(var i = 0; i < tasks.length; i++) {
+			if(tasks[i].employee == employeeId && !tasks[i].isResolved()) {
+				total+=tasks[i].hours;
 			}
 		}
 		

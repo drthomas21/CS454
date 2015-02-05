@@ -1,24 +1,29 @@
 'use strict';
 (function() {
         var Instance = null;
-        angular.module('assignment').factory('EmployeeContainer', ['$rootScope', function($rootScope) {
+        angular.module('assignment').factory('EmployeeContainer', ['$rootScope', 'TaskContainer', function($rootScope,TaskContainer) {
 		function EmployeeContainer() {
 			var arrEmployees = [];
 			
 			var init = function() {
 				var object = new Employee();
-				object.name = "John Doe";
+				object.name = "Brittany Roque";
 				object.title = "artist";
 				that.createEmployee(object);
 				
 				object = new Employee();
-				object.name = "Jane Doe";
-				object.title = "writer";
+				object.name = "Frank Sinatra";
+				object.title = "artist";
 				that.createEmployee(object);
 				
 				object = new Employee();
-				object.name = "Daine Wolf";
+				object.name = "Bill Gates";
 				object.title = "programmer";
+				that.createEmployee(object);
+				
+				object = new Employee();
+				object.name = "Meagan Fisher";
+				object.title = "designer";
 				that.createEmployee(object);
 			};
 			
@@ -38,6 +43,13 @@
 					if(empId == arrEmployees[i].id) {
 						arrEmployees.splice(i,1);
 					}					
+				}
+				
+				var tasks = TaskContainer.getTasks();
+				for(var i = 0; i < tasks.length; i++) {
+					if(tasks[i].employee == empId) {
+						tasks[i].employee = null;
+					}
 				}
 			};
 						
