@@ -8,6 +8,10 @@ angular.module('assignment').controller('TaskListCtrl',['$scope','TaskContainer'
 				$scope.taskList.push(list[i]);
 			}
 		}
+		
+		if(!$scope.$$phase) {
+			$scope.$apply();
+		}
 	};
 	
 	$scope.taskList = [];
@@ -23,6 +27,7 @@ angular.module('assignment').controller('TaskListCtrl',['$scope','TaskContainer'
 	
 	$scope.deleteTask = function(taskId) {
 		TaskContainer.removeTask(taskId);
+		buildTasks();
 	};
 	
 	$scope.$on('newTask',function(event,taskId) {

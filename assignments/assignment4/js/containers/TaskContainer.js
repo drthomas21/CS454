@@ -13,23 +13,30 @@
 			};
 			
 			this.getTasks = function() {
-				return arrTasks;
+				var list = [];
+				for(var i = 0; i < arrTasks.length; i++) {
+					if(arrTasks[i]) {
+						list.push(arrTasks[i]);
+					}					
+				}
+				return list;
 			};
 			
 			this.getTask = function(taskId) {
-				for(var i in arrTasks) {
-					if(taskId == arrTasks[i].id) {
-						return arrTasks[i];
+				var list = that.getTasks();
+				for(var i = 0; i < list.length; i++) {
+					if(list[i] && taskId == list[i].id) {
+						return list[i];
 					}					
 				}
 				
 				return null;
-			}
+			};
 			
 			this.removeTask = function(taskId) {
 				for(var i in arrTasks) {
-					if(taskId == arrTasks[i].id) {
-						arrTasks.splice(i,1);
+					if(arrTasks[i] && taskId == arrTasks[i].id) {
+						arrTasks[i] = null;
 					}					
 				}
 			};

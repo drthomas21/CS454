@@ -9,11 +9,11 @@ angular.module('assignment').controller('AddEmployeeCtrl',['$scope','EmployeeCon
 	};
 
 	$scope.submitForm = function() {
-		if($scope.employee.name == "") {
+		if($scope.employee.name.replace(" ","") == "") {
 			$scope.employee.name = "New Employee";
 		}
 		
-		if($scope.employee.title == "") {
+		if($scope.employee.title.replace(" ","") == "") {
 			$scope.employee.title = "New Title";
 		}
 		

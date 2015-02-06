@@ -1,7 +1,7 @@
 angular.module('assignment').controller('EmployeeCtrl',['$scope','EmployeeContainer','TaskContainer','$sce',function($scope,EmployeeContainer,TaskContainer,$sce){
 	$scope.employeeList = EmployeeContainer.getEmployees();
 	$scope.taskList = TaskContainer.getTasks();
-	$scope.colWidth = 3;
+	$scope.colWidth = 4;
 	
 	$scope.getTaskByEmployee = function(employeeId) {
 		var list = [];
@@ -29,13 +29,13 @@ angular.module('assignment').controller('EmployeeCtrl',['$scope','EmployeeContai
 	$scope.addBreak = function(index) {
 		var html = "";
 		if(index > 0 && index % $scope.colWidth == 0) {
-			html = "<br /><br />";
+			html = "<br /><div class='col-xs-12'><hr /></div><br />";
 		}
 
 		return $sce.trustAsHtml(html);
 	}
 	
-	$scope.$on(function(event,EmployeeContainer){
+	$scope.$on('newEmployee',function(event,empId){
 		$scope.employeeList = EmployeeContainer.getEmployees();
 	});
 	

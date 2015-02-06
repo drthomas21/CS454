@@ -38,6 +38,10 @@
 			li.even {
 				background-color: #fff;
 			}
+			.employee-widget {
+				border-radius: 4px;
+				border: 1px solid #ccc;
+			}
 		</style>
 		
 		<!-- JS Libraries -->
@@ -108,7 +112,7 @@
 						</div>
 					</form>
 				</section>
-				<section class="col-xs-3" ng-controller="AddEmployeeCtrl">
+				<!-- section class="col-xs-3" ng-controller="AddEmployeeCtrl">
 					<h2 class="col-xs-12">Add Employee</h2>
 					<form class="col-xs-12">
 						<div class="col-xs-12">
@@ -132,7 +136,7 @@
 							<button class="btn btn-primary" ng-click="submitForm()">Add Employee</button>
 						</div>
 					</form>
-				</section>
+				</section -->
 				<section class="col-xs-6" ng-controller="TaskListCtrl">
 					<h2 class="col-xs-12">Task List</h2>
 					<ul class="col-xs-12 list-unstyled">
@@ -153,24 +157,22 @@
 					</ul>
 				</section>
 			</div>
+			<br />
 			<div class="row" ng-controller="EmployeeCtrl">
-				<section ng-repeat="employee in employeeList">
-					<div class="col-xs-{{colWidth}}" >
-						<h3 class="col-xs-12">{{employee.name}}</h3>
-						<small>{{employee.title}}</small>
-						<ul class="col-xs-12 list-unstyled">
-							<li class="col-xs-12" ng-class="{even: $even,odd:$odd}" ng-repeat="task in getTaskByEmployee(employee.id) | filter:search">
-								<div class="col-xs-7">{{task.name}}</div>
-								<div class="col-xs-5">
-									<button ng-show="task.isResolved()" class="btn btn-success col-xs-12 pull-right" ng-click="task.reopened()"><i class="glyphicon glyphicon-ok pull-left"></i> Completed</button>
-									<button ng-hide="task.isResolved()" class="btn btn-default col-xs-12 pull-right" ng-click="task.resolved()">Complete</button>
-								</div>
-							</li>
-						</ul>
-						<h3>Total Hours: {{getTotalHours(employee.id)}} </h3>								
-					</div>
-					<span ng-bind-html="addBreak($index)"></span>
-				</section>
+				<div ng-repeat="employee in employeeList" class="employee-widget col-xs-{{colWidth}}">
+					<h3 class="col-xs-12">{{employee.name}}</h3>
+					<small>{{employee.title}}</small>
+					<ul class="col-xs-12 list-unstyled">
+						<li class="col-xs-12" ng-class="{even: $even,odd:$odd}" ng-repeat="task in getTaskByEmployee(employee.id) | filter:search">
+							<div class="col-xs-7">{{task.name}}</div>
+							<div class="col-xs-5">
+								<button ng-show="task.isResolved()" class="btn btn-success col-xs-12 pull-right" ng-click="task.reopened()"><i class="glyphicon glyphicon-ok pull-left"></i> Completed</button>
+								<button ng-hide="task.isResolved()" class="btn btn-default col-xs-12 pull-right" ng-click="task.resolved()">Complete</button>
+							</div>
+						</li>
+					</ul>
+					<h3>Total Hours: {{getTotalHours(employee.id)}} </h3>								
+				</div>
 			</div>
 		</div>
 	</body>
