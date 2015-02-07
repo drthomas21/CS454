@@ -33,7 +33,7 @@
 			    pointer-events: none;
 			}
 			li.odd {
-				background-color: #eee;
+				background-color: #ccc;
 			}
 			li.even {
 				background-color: #fff;
@@ -137,7 +137,7 @@
 						</div>
 					</form>
 				</section -->
-				<section class="col-lg-6" ng-controller="TaskListCtrl">
+				<section class="col-lg-9" ng-controller="TaskListCtrl">
 					<h2 class="col-xs-12">Task List</h2>
 					<ul class="col-xs-12 list-unstyled">
 						<li class="col-xs-12" ng-repeat="task in taskList | filter:search" ng-class="{even: $even,odd:$odd}">
