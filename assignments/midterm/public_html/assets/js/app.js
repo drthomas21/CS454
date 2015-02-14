@@ -5,7 +5,7 @@ app.controller('Controller',['$scope','$sce',function($scope,$sce) {
 	$scope.tabs = [
            {
         	   header: 'Pablo',
-        	   content: "<h2>1. Explain what is your node module</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mongoose is the Node module that we are presenting. MongoDB is the database, which is a NoSQL database that stores data in BSON documents. (like JSON, where you have a key and value). NoSQL means it’s not a traditional relational database. You can think of these documents as rows in an SQL database. According to their website 30 of the world's 100 largest organizations use it.</p>" +
+        	   content: "<h2>1. Explain what is your node module</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mongoose is the Node module that we are presenting. MongoDB is the database, which is a NoSQL database that stores data in BSON documents. (like JSON, where you have a key and value). NoSQL means it.s not a traditional relational database. You can think of these documents as rows in an SQL database. According to their website 30 of the world's 100 largest organizations use it.</p>" +
         	   			"<h2>2. What problem or problems does your node module solve when using it inside a node application?</h2><p>It can manage data of any structure, no matter how often it changes or it where it comes from. It is best for applications with unstructured, semi-structured and polymorphic data, as well as applications with large scalability requirements.</p>",
            }, {
         	   header: 'David',
@@ -123,10 +123,36 @@ app.controller('Controller',['$scope','$sce',function($scope,$sce) {
 					"		</ul>",
            }, {
         	   header: 'Ali',
-        	   content: 'Test',
+        	   content: '<h2>Where can you find documentation on your module? Does the documentation cover all the methods in the module? Is the documentation lacking in any way?</h2>' +
+						"<ol>" +
+						"	<li>The documentation can be found on the following link<br /><a href='https://www.npmjs.com/package/mongodb'>https://www.npmjs.com/package/mongodb</a><br /><br />Code is also available on github<br /><a href='https://github.com/mongodb/node-mongodb-native'>https://github.com/mongodb/node-mongodb-native</a><br /><br />There is also a change log on JIRA<br /><a href='http://jira.mongodb.org/browse/NODE'>http://jira.mongodb.org/browse/NODE</a></li>" +
+						"	<li>The documentation is pretty extensive.  There are even live examples you can try out.<br /><br />I think a word of caution is in order.  Just like an other application, you need to be careful when attempting to map out relational data using docs.  I found a few articles that talk about that.<br /><br />MongoDB is very powerful and can scale horizontally, you can.t have joins, rather you work at the document level (BSON-Data interchange format used mainly as a data storage and network transfer format, like JSON-JavaScript Object Notation).<br /><br />There are several good use cases for MongoDB and how it compares to traditional RDBMS (Relational Database Management System).<br />" +
+						"		<a href='http://www.slideshare.net/johnrjenson/mongodb-pros-and-cons'>http://www.slideshare.net/johnrjenson/mongodb-pros-and-cons</a><br /><img src='./assets/images/pic1.png' /><br />Important reference if you are used to SQL queries<br /><a href='http://docs.mongodb.org/manual/reference/sql-comparison/'>http://docs.mongodb.org/manual/reference/sql-comparison/</a></li>" +
+						"</ol>",
            }, {
         	   header: 'Cliff',
-        	   content: 'Test',
+        	   content: '<h2>Are there any additional details I should know about node module you picked?</h2>'+
+						"<p>General Challenges for Database Base Management:"+
+						"	<ul>" +
+						"		<li>High Transaction Rates<ul>"+
+						"			<li>constant load from client</li>"+
+						"			<li>constant requirements to exceed server capacity</li>"+
+						"			<li>system cannot have down time</li></ul>" +
+						"		<li>Continuous Data Growth<ul>"+
+						"			<li>Add storage over time</li>" +
+						"			<li>Aging out obsolete data</li>" +
+						"			<li>Minimizing resource use of non-used data</li>" +
+						"			<li>10.s of millions of queries per second</li></ul>" +
+						"	</ul>" +
+						"</p>" +
+						"<p>Advantages of MongoDB:"+
+						"	<ul>"+
+						"		<li>Document oriented data models</li>" +
+						"		<li>High availability of deployment</li>" +
+						"		<li>Horizontally scalable</li>" +
+						"	</ul>"+
+						"</p>" +
+						"<p>Other Use Case:<br /><img src='./assets/images/pic2.jpg' /><br /><img src='./assets/images/pic3.jpg' /></p>",
            }
     ];
 	
