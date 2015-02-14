@@ -1,0 +1,268 @@
+/**
+	Global CSS
+				*/
+ul.nav-tabs > li {
+	cursor: pointer;
+}
+
+.jquery-ui.draggable {
+	border: 1px solid #000;
+	border-radius: 4px;
+	background-color: #fff;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.modal-dialog {
+	margin-top: 100px;
+}
+
+.panel-title a {
+	cursor: pointer;
+}
+
+.panel-default>.panel-heading {
+	background-image: none;
+	background-repeat: no-repeat;
+}
+
+.panel-body label {
+	font-weight: normal;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+nav.navbar {
+	z-index: 2000;
+}
+
+/**
+	ChartCreationWidget CSS
+				*/
+#chartListWidget .data-source-drop-box {
+	border: 1px dashed #aaa;
+	padding: 20px;
+	background: #eee;
+	border-radius: 4px;
+	color: #555;
+	width: 100%;
+	text-align: center;
+}
+
+#chartListWidget .activeWidget {
+	box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+	/*padding: 3px 0px 3px 3px;*/
+	/*margin: 5px 1px 3px 0px;*/
+	border: 1px solid rgba(81, 203, 238, 1);
+}
+
+#chartListWidget .alertWidget {
+	box-shadow: 0 0 5px rgba(226, 37, 37, 1);
+	/*padding: 3px 0px 3px 3px;*/
+	/*margin: 5px 1px 3px 0px;*/
+	border: 1px solid rgb(236, 48, 48);
+}
+
+#chartListWidget li.alertTab > a {
+	background-color: rgb(242, 62, 62);
+	color: #fff;
+}
+
+
+#chartListWidget div.tab-pane > div.draggable {
+	float: left;
+	overflow: hidden;
+	position: absolute !important;
+}
+
+/**
+ DataFeedWidget CSS
+ 				*/
+#DataFeedWidget {
+	min-height: 400px;
+}
+
+#DataFeedWidget .data-source-drop-box {
+	border: 1px dashed #aaa;
+	padding: 20px;
+	background: #eee;
+	border-radius: 4px;
+	color: #555;
+	width: 200px;
+	text-align: center;
+}
+
+#DataFeedWidget .shaded {
+	opacity: 0.4;
+}
+
+/* Custom CSS styles */
+
+
+
+
+/* PABLO ADDED STYLES */
+.chart-canvas {
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-bottom: 2px solid #ccc;
+}
+
+.options-icon {
+	position: relative;
+	bottom: 40px;
+	right: 10px;
+	height: 0;
+}
+
+.red {
+	color: red;
+}
+
+.options-icon:hover, .options-icon:focus {
+	cursor: pointer;
+	color: red;
+}
+
+.reflow {
+	cursor: pointer;
+}
+
+.reflow:hover, .reflow:focus {
+	color: red;
+}
+
+div.options {
+	padding: 0 10px 10px;
+	background-color: #eee;
+	border-left: 1px solid #bbb;
+	border-bottom: 2px solid #bbb;
+	border-right: 1px solid #bbb;
+}
+
+div.options {
+	display: inline-block;
+	-webkit-transition: all linear 0.5s;
+	transition: all linear 0.2s;
+}
+
+div.options hr {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+div.options label {
+	margin-bottom: 0;
+}
+div.options.ng-hide {
+	opacity: 0;
+}
+
+div.options h4 {
+
+}
+
+div.options p {
+
+}
+
+div.speed-btn {
+	margin-left: 10px;
+}
+
+/* PABLO ADDED STYLES ^^^ */
+
+
+
+
+
+.thumbnail img {
+	width: 100%;
+}
+
+.ratings {
+	padding-right: 10px;
+	padding-left: 10px;
+	color: #d17581;
+}
+
+.thumbnail {
+	padding: 0;
+}
+
+.thumbnail .caption-full {
+	padding: 9px;
+	color: #333;
+}
+
+footer {
+	margin: 50px 0;
+}
+
+.box {
+	border: 1px solid #ccc;
+}
+
+.controls {
+	display: inline;
+	width: 50px;
+	margin: 10px auto;
+}
+
+.rate {
+	width: 100%;
+	text-align: -webkit-right;
+}
+
+.options {
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+.input-data {
+	display: inline-block;
+	width: 75px;
+}
+
+.input-range {
+	display: inline-block;
+	width: 25px;
+}
+
+#footer {
+	margin-top: 50px;
+	padding: 10px 100px;
+	background-color: #333;
+}
+
+#footer p {
+	color: #bbb;
+	margin: 0;
+}
+
+.left-inner-addon {
+    position: relative;
+}
+.left-inner-addon input {
+    padding-left: 30px;    
+}
+.left-inner-addon i {
+    position: absolute;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+
+.right-inner-addon {
+    position: relative;
+}
+.right-inner-addon input {
+    padding-right: 30px;    
+}
+.right-inner-addon i {
+    position: absolute;
+    right: 0px;
+    padding: 10px 12px;
+    pointer-events: none;
+}
