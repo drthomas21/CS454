@@ -123,11 +123,9 @@ app.controller('Controller',['$scope','$sce',function($scope,$sce) {
 					"		</ul>",
            }, {
         	   header: 'Ali',
-        	   id: 'ali',
         	   content: 'Test',
            }, {
         	   header: 'Cliff',
-        	   id: 'cliff',
         	   content: 'Test',
            }
     ];
