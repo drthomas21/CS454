@@ -1,0 +1,16 @@
+{
+  "name": "assignment5",
+  "version": "1.0.0",
+  "description": "Marvel Character Finder",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dathomas",
+  "license": "MIT",
+  "dependencies": {
+    "express": "~4.11.2",
+    "body-parser": "~1.12.0",
+    "jade": "~1.9.2"
+  }
+}
