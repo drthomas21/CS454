@@ -9,8 +9,10 @@
   "author": "dathomas",
   "license": "MIT",
   "dependencies": {
-    "express": "~4.11.2",
     "body-parser": "~1.12.0",
-    "jade": "~1.9.2"
+    "crypto": "0.0.3",
+    "ejs": "^2.2.4",
+    "express": "~4.11.2",
+    "superagent": "^0.21.0"
   }
 }
