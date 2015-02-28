@@ -112,6 +112,12 @@ header.header {
 	height: 50px;
 }
 
+div.carousel div.carousel-inner div.item img {
+	height: 500px;
+}
+.carousel-caption {
+	background-image: url('/images/background-001.png');
+}
 div.homepage {
 	
 }

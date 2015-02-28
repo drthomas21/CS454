@@ -87,7 +87,34 @@ app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window',funct
 	$scope.Characters = [];
 	$scope.Character = null;
 	$scope.search = "";
-	
+	$scope.slides = [{
+		src: "/images/slides/slide-001.jpg",
+		text: "Invisible Woman"
+	},{
+		src: "/images/slides/slide-002.png",
+		text: "Iron Man"
+	},{
+		src: "/images/slides/slide-003.jpg",
+		text: "Captain America"
+	},{
+		src: "/images/slides/slide-004.png",
+		text: "Elektra"
+	},{
+		src: "/images/slides/slide-005.jpg",
+		text: "Spiderman"
+	},{
+		src: "/images/slides/slide-006.jpg",
+		text: "Black Widow"
+	},{
+		src: "/images/slides/slide-007.jpg",
+		text: "Wolverine"
+	}];
+	angular.element('body').ready(function() {
+		angular.element('.carousel').carousel({
+			interval: 3000,
+			pause: 'none'
+		});
+	});
 	$scope.textOffset = 0;
 	$scope.textValue = "Searching...";
 	var emptyCharacter = function() {
