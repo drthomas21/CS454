@@ -6,7 +6,7 @@ app.controller('DashboardCtrl',['$scope','$rootScope','$http','$q',function($sco
 	var names = "";
 	var timeout = null;
 	var canceler = $q.defer();
-	var initalSearch = ["man","iron","spide","x","wolf","ame"];
+	var initalSearch = ["man","iron","spide","x","wolf","ame","wolv","cy","hulk","black","ace","pika","war","mew"];
 	
 	$scope.getCharacters = function() {
 		return $scope.characters;

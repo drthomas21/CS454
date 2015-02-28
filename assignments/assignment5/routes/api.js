@@ -19,7 +19,11 @@ module.exports = function(server) {
 						results: result.body.results
 					});
 				} else {
-					console.log(result);
+					res.json({
+						success: true,
+						message: "",
+						results: []
+					});
 				}
 			});
 	});
