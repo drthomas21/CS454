@@ -1,10 +1,12 @@
 var app = angular.module('app',['ngSanitize','ui.select']);
 
-app.controller('DashboardCtrl',['$scope','$rootScope','$http','$timeout',function($scope,$rootScope,$http,$timeout){
-	$scope.search;
+app.controller('DashboardCtrl',['$scope','$rootScope','$http','$q',function($scope,$rootScope,$http,$q){
+	$scope.search = undefined;
 	$scope.characters = [];
 	var names = "";
 	var timeout = null;
+	var canceler = $q.defer();
+	var initalSearch = ["man","iron","spide","x","wolf","ame"];
 	
 	$scope.getCharacters = function() {
 		return $scope.characters;
@@ -13,45 +15,48 @@ app.controller('DashboardCtrl',['$scope','$rootScope','$http','$timeout',functio
 	$scope.getCharacterNames = function() {
 		var list = [];
 		for(var i = 0; i < $scope.characters.length; i++) {
-			list.push($scope.characters[i].name);
+			list.push($scope.characters[i].name.toLowerCase());
 		}
 		
 		return list;
 	};
 	
-	$scope.selectedCharacter = function(Characters) {
-		if(timeout) {
-			$timeout.cancel($timeout);
-		}
-		
-		timeout = $timeout(function(){
-			$rootScope.$broadcast('characters',Characters);
-		}, 1000);		
+	$scope.selectedCharacter = function(Characters,value) {
+		$rootScope.$broadcast('characters',Characters,value);		
 	};
 	
 	var buildCharacterList = function(value) {
-		var Characters = [];
-		for(var i = 0; i < $scope.characters.length; i++) {
-			if($scope.characters[i].name.indexOf(value.toLowerCase()) >= 0 || $scope.characters[i].name.indexOf(value.toUpperCase()) >= 0) {
-				Characters.push($scope.characters[i]);
-			}
-		}
-		
-		$scope.selectedCharacter(Characters);
-	}
+		$scope.selectedCharacter($scope.characters,value);
+	};
 	
-	$scope.refreshCharacters = function(value) {
-		var names = $scope.getCharacterNames();
-		if(value.replace(' ','').length > 0 && names.join(',').indexOf(value) == -1) {
+	$scope.refreshCharacters = function(value,send) {
+		$scope.search = value;
+		if(value.length > 0) {
 			$rootScope.$broadcast('searching');
-			$http.get('/api/search?name='+value)
+			if(canceler && send) {
+				canceler.resolve();
+				canceler = $q.defer();
+			}
+			
+			$http.get('/api/search?name='+value,{timeout: canceler.promise})
 			.success(function(data,status,headers,config){
 				if(data.success) {
-					$scope.characters = [];
 					for(var i = 0; i < data.results.length; i++) {
-						$scope.characters.push(data.results[i]);
+						var bool = true;
+						for(var j = 0; j < $scope.characters.length; j++) {
+							if($scope.characters[j].name == data.results[i].name) {
+								bool = false;
+							}
+						}
+						
+						if(bool) {
+							$scope.characters.push(data.results[i]);
+						}
+						
 					}
-					buildCharacterList(value);
+					if(send) {
+						buildCharacterList(value);
+					}
 				} else {
 					$rootScope.$broadcast('error',data.message);
 				}
@@ -59,21 +64,29 @@ app.controller('DashboardCtrl',['$scope','$rootScope','$http','$timeout',functio
 			})
 			.error(function(data,status,headers,config){
 				$rootScope.$broadcast('searchFailed',data);
-				});
-		} else {
-			buildCharacterList(value);
-		} 
+			});
+		}
 	};
 	
 	$scope.clear = function() {
+		$scope.search = undefined;
 		$rootScope.$broadcast('clear');
-	}
+	};
+	
+	$scope.$on('clear',function() {
+		$scope.search = undefined;
+	});
+	
+	initalSearch.forEach(function(value) {
+		$scope.refreshCharacters(value);
+	});
 }]);
 
-app.controller('CharacterCtrl',['$scope','$timeout',function($scope,$timeout){
+app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window',function($scope,$rootScope,$timeout,$window){
 	$scope.isSearching = false;
 	$scope.Characters = [];
 	$scope.Character = null;
+	$scope.search = "";
 	
 	$scope.textOffset = 0;
 	$scope.textValue = "Searching...";
@@ -111,9 +124,19 @@ app.controller('CharacterCtrl',['$scope','$timeout',function($scope,$timeout){
 		$scope.Character = Character;
 	};
 	
+	$scope.hasNoResults = function() {
+		for(var i = 0; i < $scope.Characters.length; i++) {
+			if($scope.Characters[i].name.indexOf($scope.search) >= 0){
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	$scope.clear = function() {
 		$scope.Character = null;
-		$scope.Characters = []
+		$scope.Characters = [];
+		$rootScope.$broadcast("clear");
 	};
 	
 	$scope.$on('searching',function(){
@@ -124,12 +147,13 @@ app.controller('CharacterCtrl',['$scope','$timeout',function($scope,$timeout){
 	
 	$scope.$on('searchFailed',function(event,message){
 		$scope.isSearching = false;
+		$scope.Character = null;
 		emptyCharacter();
 	});
 	
-	$scope.$on('characters',function(event,Characters){
+	$scope.$on('characters',function(event,Characters,value){
 		$scope.Characters = [];
-		$scope.Character = null;
+		$scope.search = value;
 		if(Characters && Characters.length >= 0) {
 			$scope.isSearching = false;
 			$scope.Characters = Characters;
@@ -142,6 +166,9 @@ app.controller('CharacterCtrl',['$scope','$timeout',function($scope,$timeout){
 	
 	$scope.$on('clear',function() {
 		$scope.isSearching = false;
+		$scope.Character = null;
+		$scope.search = "";
+		$window.scrollTo(0,0);
 		emptyCharacter();
 	});
 }]);

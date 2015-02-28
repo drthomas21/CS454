@@ -90,3 +90,20 @@ span.character-list:hover, span.character-list:focus, span.character-list:active
 img.details {
 	max-height: 500px;
 }
+
+figure {
+	text-align:center;
+}
+
+p.description img {
+	width: 50%;
+}
+
+img.js-lazy-load-image {
+	display: none;
+	visibility: hidden;
+}
+
+header.header {
+	height: 50px;
+}

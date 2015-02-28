@@ -12,11 +12,15 @@ module.exports = function(server) {
 			.query({"limit":20})
 			.query({"format":"json"})
 			.end(function(error,result) {
-				res.json({
-					success: result.body.error == "OK",
-					message: result.body.error,
-					results: result.body.results
-				});
+				if(result && result.body) {
+					res.json({
+						success: result.body.error == "OK",
+						message: result.body.error,
+						results: result.body.results
+					});
+				} else {
+					console.log(result);
+				}
 			});
 	});
 };
