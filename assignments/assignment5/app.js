@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var port = 8000;
+var config = require('./config.json');
 
 var server = express();
 server.use(bodyParser.json());
@@ -12,6 +12,6 @@ server.use(express.static(__dirname + '/public_html'));
 require('./routes/api')(server);
 require('./routes/client')(server);
 
-server.listen(port,function() {
-	console.log("Server is listening on port: " + port);
+server.listen(config.port,function() {
+	console.log("Server is listening on port: " + config.port);
 });

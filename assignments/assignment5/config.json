@@ -9,5 +9,6 @@
 			"api_key": "ab3b39a3f9848bc7f836a575b4762107611a9dd0",
 			"request_url": "http://www.comicvine.com/api"
 		}
-	}
+	},
+	"port" : 8000
 }

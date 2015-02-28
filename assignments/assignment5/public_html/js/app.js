@@ -30,9 +30,10 @@ app.controller('DashboardCtrl',['$scope','$rootScope','$http','$q',function($sco
 	};
 	
 	$scope.refreshCharacters = function(value,send) {
-		$scope.search = value;
-		if(value.length > 0) {
-			$rootScope.$broadcast('searching');
+		if(value.length > 0 || true) {
+			if(send) {
+				$rootScope.$broadcast('searching',value);
+			}
 			if(canceler && send) {
 				canceler.resolve();
 				canceler = $q.defer();
@@ -56,6 +57,8 @@ app.controller('DashboardCtrl',['$scope','$rootScope','$http','$q',function($sco
 					}
 					if(send) {
 						buildCharacterList(value);
+					} else {
+						buildCharacterList("");
 					}
 				} else {
 					$rootScope.$broadcast('error',data.message);
@@ -63,7 +66,9 @@ app.controller('DashboardCtrl',['$scope','$rootScope','$http','$q',function($sco
 				
 			})
 			.error(function(data,status,headers,config){
-				$rootScope.$broadcast('searchFailed',data);
+				if(data) {
+					$rootScope.$broadcast('searchFailed',data);
+				}
 			});
 		}
 	};
@@ -86,6 +91,7 @@ app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window',funct
 	$scope.isSearching = false;
 	$scope.Characters = [];
 	$scope.Character = null;
+	$scope.message = "";
 	$scope.search = "";
 	$scope.slides = [{
 		src: "/images/slides/slide-001.jpg",
@@ -166,10 +172,10 @@ app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window',funct
 		$rootScope.$broadcast("clear");
 	};
 	
-	$scope.$on('searching',function(){
+	$scope.$on('searching',function(event,value){
 		$scope.isSearching = true;
 		$scope.Character = null;
-		emptyCharacter();
+		$scope.search = value;
 	});
 	
 	$scope.$on('searchFailed',function(event,message){
@@ -177,12 +183,16 @@ app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window',funct
 		$scope.Character = null;
 		emptyCharacter();
 	});
+
+	$scope.$on('error',function(event,message) {
+		$scope.isSearching = false;
+		$scope.message = message;
+	});
 	
 	$scope.$on('characters',function(event,Characters,value){
-		$scope.Characters = [];
+		$scope.isSearching = false;
 		$scope.search = value;
 		if(Characters && Characters.length >= 0) {
-			$scope.isSearching = false;
 			$scope.Characters = Characters;
 			if(Characters.length == 1) {
 				$scope.loadCard(Characters[0]);

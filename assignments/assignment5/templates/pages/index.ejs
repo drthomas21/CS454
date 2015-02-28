@@ -9,17 +9,21 @@
 	        <% include ../partials/header %>
 	    </header>
 	
-	    <div class='container' ng-controller="CharacterCtrl" style="min-height: 600px; border-top-right-radius: 0px; border-top-left-radius: 0px;">
-    		<div ng-show="isSearching" style="height: 30px">
-				<p style="background-image: url('/images/ajax-loader.gif'); background-repeat: no-repeat; height: 27px; background-position-y: 4px; padding-left: 21px">{{textValue.substr(textOffset)}}</p>
-			</div>
-	        <div ng-show="Characters.length == 0 && Character == null && search.length == 0" class="col-lg-12 homepage">
+	    <div class='container' ng-controller="CharacterCtrl" style="min-height: 600px; border-top-right-radius: 0px; border-top-left-radius: 0px;padding-bottom:50px">
+		<div ng-show="message">
+			<div class="alert alert-danger" ng-bind="message"></div>
+		</div>
+    		<div ng-show="isSearching" class="col-lg-12" style="height: 30px">
+			<p style="background-image: url('/images/ajax-loader.gif'); background-repeat: no-repeat; height: 27px; background-position-y: 4px; padding-left: 21px">{{textValue.substr(textOffset)}}</p>
+		</div>
+		<!--- | --->
+	        <div ng-show="Character == null && search.length == 0 && !isSearching" class="col-lg-12 homepage">
 	        	<br />
 	        	<div class="col-md-6">
 	        		<img src="/images/logo-001.jpg" class="img-responsive logo"/>
         			<h3>How To Use:</h3>
         			<ul>
-        				<li>Click the logo to clear search</li>
+        				<li>Click the banner at the top left corner of the page to clear search</li>
         				<li>When viewing the search results, click on the character's thumbnail to view full profile</li>
         				<li>When searching, click on the character's name in the dropdown to view full profile</li>
         			</ul>
@@ -29,26 +33,26 @@
         		</div>
         		<div class="col-md-6">
         			<div class="col-lg-12 embed-responsive embed-responsive-16by9">
-						<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/OUYW0JyzydA" frameborder="0" allowfullscreen></iframe>
-					</div>
-					<div style="col-lg-12 center-block" style="text-align: center">
-						<div class="carousel slide" data-ride="carousel">
-							<!-- Indicators -->
-							<ol class="carousel-indicators">
-								<li data-target="#carousel-example-generic" data-slide-to="{{$index}}" ng-class="{active: $index == 0}" ng-repeat="slide in slides"></li>
-							</ol>
-							
-							<!-- Wrapper for slides -->
-							<div class="carousel-inner center-block" role="listbox" style="text-align: center">
-								<div class="item center-block" style="text-align: center" ng-class="{active: $index == 0}" ng-repeat="slide in slides">
-									<img ng-src="{{slide.src}}" class="img-responsive center-block" />
-									<div class="carousel-caption">
-										{{slide.text}}
-									</div>
+					<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/OUYW0JyzydA" frameborder="0" allowfullscreen></iframe>
+				</div>
+				<div class="col-lg-12" style="text-align: center">
+					<div class="carousel slide" data-ride="carousel">
+						<!-- Indicators -->
+						<ol class="carousel-indicators">
+							<li data-target="#carousel-example-generic" data-slide-to="{{$index}}" ng-class="{active: $index == 0}" ng-repeat="slide in slides"></li>
+						</ol>
+						
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner center-block" role="listbox" style="text-align: center">
+							<div class="item center-block" style="text-align: center" ng-class="{active: $index == 0}" ng-repeat="slide in slides">
+								<img ng-src="{{slide.src}}" class="img-responsive center-block" />
+								<div class="carousel-caption">
+									{{slide.text}}
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
         		</div>				
 	        </div>
 	        <!--- | --->
