@@ -3,7 +3,7 @@ body {
 }
 
 div.container {
-	background-color: white;
+	background-color: #FFF;
 	border-radius: 5px;
 	border: 1px solid #000;
 }
@@ -104,6 +104,14 @@ img.js-lazy-load-image {
 	visibility: hidden;
 }
 
+img.logo {
+	border-radius: 4px;
+}
+
 header.header {
 	height: 50px;
+}
+
+div.homepage {
+	
 }
