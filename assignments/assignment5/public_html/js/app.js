@@ -129,17 +129,6 @@ app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window',funct
 	
 	emptyCharacter();
 	
-	$timeout(function() { animate() }, 0);
-    var animate = function() {
-    	if ($scope.textOffset < $scope.textValue.length) {
-        	$scope.textOffset +=1;
-            $timeout(animate,100,true);
-        } else {
-        	$scope.textOffset = 0;
-        	$timeout(animate,1000,true);
-        }
-    }
-	
 	$scope.getImage = function(Character) {
 		if(!Character || !Character.image || Character.image.length == 0) {
 			return "";
