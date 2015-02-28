@@ -1,9 +1,10 @@
 var app = angular.module('app',['ngSanitize','ui.select']);
 
-app.controller('DashboardCtrl',['$scope','$rootScope','$http',function($scope,$rootScope,$http){
+app.controller('DashboardCtrl',['$scope','$rootScope','$http','$timeout',function($scope,$rootScope,$http,$timeout){
 	$scope.search;
 	$scope.characters = [];
 	var names = "";
+	var timeout = null;
 	
 	$scope.getCharacters = function() {
 		return $scope.characters;
@@ -18,47 +19,50 @@ app.controller('DashboardCtrl',['$scope','$rootScope','$http',function($scope,$r
 		return list;
 	};
 	
-	$scope.selectedCharacter = function(Character) {
-		$rootScope.$broadcast('character',Character);
+	$scope.selectedCharacter = function(Characters) {
+		if(timeout) {
+			$timeout.cancel($timeout);
+		}
+		
+		timeout = $timeout(function(){
+			$rootScope.$broadcast('characters',Characters);
+		}, 1000);		
+	};
+	
+	var buildCharacterList = function(value) {
+		var Characters = [];
+		for(var i = 0; i < $scope.characters.length; i++) {
+			if($scope.characters[i].name.indexOf(value.toLowerCase()) >= 0 || $scope.characters[i].name.indexOf(value.toUpperCase()) >= 0) {
+				Characters.push($scope.characters[i]);
+			}
+		}
+		
+		$scope.selectedCharacter(Characters);
 	}
 	
 	$scope.refreshCharacters = function(value) {
 		var names = $scope.getCharacterNames();
 		if(value.replace(' ','').length > 0 && names.join(',').indexOf(value) == -1) {
+			$rootScope.$broadcast('searching');
 			$http.get('/api/search?name='+value)
 			.success(function(data,status,headers,config){
 				if(data.success) {
-					for(var i = 0; i < data.results.data.results.length; i++) {
-						$scope.characters.push(data.results.data.results[i]);
+					$scope.characters = [];
+					for(var i = 0; i < data.results.length; i++) {
+						$scope.characters.push(data.results[i]);
 					}
-					$rootScope.$broadcast('searching');
+					buildCharacterList(value);
 				} else {
-					
+					$rootScope.$broadcast('error',data.message);
 				}
 				
 			})
 			.error(function(data,status,headers,config){
 				$rootScope.$broadcast('searchFailed',data);
-			});
-		} else if(value.replace(' ','').length > 0 && names.indexOf(value) >= 0 || names.join(',').indexOf(value) >= 0) {
-			var Character = null;
-			var index = names.indexOf(value);
-			
-			if(index >= 0) {
-				Character = $scope.characters[index];
-			} else {
-				for(var i = 0; i < $scope.characters.length; i++) {
-					if($scope.characters[i].name.indexOf(value) >= 0) {
-						Character = $scope.characters[i];
-						break;
-					}
-				}
-			}
-			
-			$scope.selectedCharacter(Character);	
-		} else if($scope.search && $scope.search.replace(' ','').length == 0) {
-			$rootScope.$broadcast('clear');
-		}
+				});
+		} else {
+			buildCharacterList(value);
+		} 
 	};
 	
 	$scope.clear = function() {
@@ -68,33 +72,13 @@ app.controller('DashboardCtrl',['$scope','$rootScope','$http',function($scope,$r
 
 app.controller('CharacterCtrl',['$scope','$timeout',function($scope,$timeout){
 	$scope.isSearching = false;
+	$scope.Characters = [];
 	$scope.Character = null;
 	
 	$scope.textOffset = 0;
 	$scope.textValue = "Searching...";
 	var emptyCharacter = function() {
-		$scope.Character = {
-			id: '',
-			name: '',
-			description: '',
-			modified: '',
-			thumbnail: {
-				path: '',
-				extension: ''
-			},
-			resourceURI: '',
-			comics: {},
-			series: {
-				items: []
-			},
-			stories: {
-				items: []
-			},
-			events: {
-				items: []
-			},
-			urls: [],
-		};
+		$scope.Characters = [];
 	};
 	
 	emptyCharacter();
@@ -110,26 +94,31 @@ app.controller('CharacterCtrl',['$scope','$timeout',function($scope,$timeout){
         }
     }
 	
-	$scope.getImage = function() {
-		if(!$scope.Character.thumbnail || $scope.Character.thumbnail.length == 0) {
+	$scope.getImage = function(Character) {
+		if(!Character || !Character.image || Character.image.length == 0) {
 			return "";
 		}
 		
-		$src = $scope.Character.thumbnail.path+"."+$scope.Character.thumbnail.extension;
-		if($src == ".") {
-			return "";
-		}
-		
-		return $src;
+		return Character.image.medium_url || Character.image.large_url;
 	};
 	
 	$scope.getDate = function() {
-		var date = new Date($scope.Character.modified);
+		var date = new Date($scope.Character.date_last_updated);
 		return date.getMonth() +"/"+(date.getDate() < 10 ? "0"+date.getDate() : date.getDate()) +"/"+date.getFullYear()
-	}
+	};
+	
+	$scope.loadCard = function(Character) {
+		$scope.Character = Character;
+	};
+	
+	$scope.clear = function() {
+		$scope.Character = null;
+		$scope.Characters = []
+	};
 	
 	$scope.$on('searching',function(){
 		$scope.isSearching = true;
+		$scope.Character = null;
 		emptyCharacter();
 	});
 	
@@ -138,10 +127,15 @@ app.controller('CharacterCtrl',['$scope','$timeout',function($scope,$timeout){
 		emptyCharacter();
 	});
 	
-	$scope.$on('character',function(event,Character){
-		if(Character) {
+	$scope.$on('characters',function(event,Characters){
+		$scope.Characters = [];
+		$scope.Character = null;
+		if(Characters && Characters.length >= 0) {
 			$scope.isSearching = false;
-			$scope.Character = Character;
+			$scope.Characters = Characters;
+			if(Characters.length == 1) {
+				$scope.loadCard(Characters[0]);
+			}
 		}
 		
 	});

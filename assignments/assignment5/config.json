@@ -1,7 +1,13 @@
 {
 	"api" : {
-		"public_key": "996779fa5f89e1444514c657cd2bbec6",
-		"private_key": "18fca319ea82fb2341713648357ba2c896dfc97d",
-		"request_url": "http://gateway.marvel.com"
+		"marvel": {
+			"public_key": "996779fa5f89e1444514c657cd2bbec6",
+			"private_key": "18fca319ea82fb2341713648357ba2c896dfc97d",
+			"request_url": "http://gateway.marvel.com"
+		}, 
+		"comicvine": {
+			"api_key": "ab3b39a3f9848bc7f836a575b4762107611a9dd0",
+			"request_url": "http://www.comicvine.com/api"
+		}
 	}
 }

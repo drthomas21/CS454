@@ -1,4 +1,4 @@
-		<nav class="navbar navbar-default navbar-inverse" role="navigation" ng-controller="DashboardCtrl">
+		<nav class="navbar navbar-default navbar-inverse" role="navigation" ng-controller="DashboardCtrl" style="margin-bottom: 0px;">
 			<div class="">
 			    <!-- Brand and toggle get grouped for better mobile display -->
 			    <div class="navbar-header">
@@ -7,7 +7,7 @@
 						<ui-select ng-model="search" theme="bootstrap" ng-change="showValue()">
 							<ui-select-match placeholder="Search...">{{$select.selected.name}}</ui-select-match>
 							<ui-select-choices repeat="character in characters | filter: $select.search" refresh="refreshCharacters($select.search)" refresh-delay="0">
-								<div ng-bind-html="character.name | highlight: $select.search" ng-click="selectedCharacter(character)"></div>
+								<div ng-bind-html="character.name | highlight: $select.search" ng-click="selectedCharacter([character])"></div>
 						    </ui-select-choices>
 					    </ui-select>
 			        </form>
