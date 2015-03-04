@@ -6,7 +6,7 @@
 					<form class="navbar-form navbar-left" role="search">
 						<ui-select ng-model="search" theme="bootstrap">
 							<ui-select-match placeholder="Search..." style="width: 200px; text-align: left">{{$select.selected.name}}</ui-select-match>
-							<ui-select-choices repeat="character in characters | filter: {name: $select.search.toLowerCase()} | orderBy:'name'" refresh="refreshCharacters($select.search,true)" refresh-delay="0">
+							<ui-select-choices repeat="character in characters | filter: {name: $select.search.toLowerCase()} | orderBy:'name'" refresh="refreshCharacters($select.search,isLoaded())" refresh-delay="0">
 								<div ng-bind-html="character.name | highlight: $select.search" ng-click="selectedCharacter([character])"></div>
 						    </ui-select-choices>
 					    </ui-select>
