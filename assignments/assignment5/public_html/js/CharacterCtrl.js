@@ -33,9 +33,24 @@ app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window','$rou
 						$rootScope.$broadcast('searchFailed',data);
 					}
 				});	
+			} else {
+				$timeout(function() {
+					angular.element('.character-tabs a:first').tab('show') // Select first tab
+					$('.character-tabs a').click(function (e) {
+						e.preventDefault()
+						angular.element(this).tab('show')
+					})
+				}, 1000);
 			}
 		}
 	};
+	
+	$scope.filterLinks = function(string) {
+		if(typeof(string) == "string") {
+			return string.replace(/\<a[^\>]+\>|\<\/a\>/g,"");
+		}
+		return "";
+	}
 	
 	$scope.loadCharacter = function(Character) {
 		LocationService.setCharacterId(Character.id);
