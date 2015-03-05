@@ -1,31 +1,45 @@
-app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window','$routeParams','$http',function($scope,$rootScope,$timeout,$window,$routeParams,$http){
+app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window','$routeParams','$http','LocationService','HistoryService',function($scope,$rootScope,$timeout,$window,$routeParams,$http,LocationService,HistoryService){
 	$scope.message = null;
 	$scope.Character = null;
+	$scope.Characters = [];
 	$scope.searching = false;
-	$scope.tabs = ['friends']
 	
 	var init = function() {
 		if($routeParams.id) {
 			$scope.searching = true;
-			$http.get('/api/character/'+$routeParams.id)
-			.success(function(data,status,headers,config){
-				if(data.success) {
-					$scope.Character = data.character;
-					console.log($scope.Character);
-				} else {
-					$scope.Character = null;					
-					$scope.message = data.message
-				}
-				$scope.searching = false;				
-			})
-			.error(function(data,status,headers,config){
-				if(data) {
-					$rootScope.$broadcast('searchFailed',data);
-				}
-			});
-			
+			$scope.Characters = HistoryService.getCharacterList();
+			$scope.Character = HistoryService.getCharacter($routeParams.id);
+			if(!$scope.Character) {
+				$http.get('/api/character/'+$routeParams.id)
+				.success(function(data,status,headers,config){
+					if(data.success) {
+						$scope.Character = data.character;
+						HistoryService.addToCharacters($scope.Character);
+					} else {
+						$scope.Character = null;					
+						$scope.message = data.message
+					}
+					$scope.searching = false;
+					$timeout(function() {
+						angular.element('.character-tabs a:first').tab('show') // Select first tab
+						$('.character-tabs a').click(function (e) {
+							e.preventDefault()
+							angular.element(this).tab('show')
+						})
+					}, 1000);
+				})
+				.error(function(data,status,headers,config){
+					if(data) {
+						$rootScope.$broadcast('searchFailed',data);
+					}
+				});	
+			}
 		}
-	}
+	};
+	
+	$scope.loadCharacter = function(Character) {
+		LocationService.setCharacterId(Character.id);
+	};
 	
 	$scope.getImage = function(Character) {
 		if(!Character || !Character.image || Character.image.length == 0) {
@@ -40,10 +54,6 @@ app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window','$rou
 		return date.getMonth() +"/"+(date.getDate() < 10 ? "0"+date.getDate() : date.getDate()) +"/"+date.getFullYear()
 	};
 	
-	$scope.loadCard = function(Character) {
-		$scope.Character = Character;
-	};
-	
 	$scope.hasNoResults = function() {
 		for(var i = 0; i < $scope.Characters.length; i++) {
 			if($scope.Characters[i].name.indexOf($scope.search) >= 0){
@@ -51,7 +61,7 @@ app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window','$rou
 			}
 		}
 		return true;
-	}
+	};
 	
 	$scope.clear = function() {
 		$scope.Character = null;

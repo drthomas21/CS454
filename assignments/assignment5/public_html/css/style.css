@@ -57,7 +57,14 @@ li.even {
 	overflow: hidden;
 }
 
-.card-inner {
+.card-small {
+	height: 100px;
+	min-height: 100px;
+	max-height: 100px;
+	overflow: hidden;
+}
+
+.card .card-inner {
 	border: 4px solid #CCC;
 	border-radius: 10px;
 	margin-top: 20px;
@@ -67,14 +74,30 @@ li.even {
 	overflow:hidden;
 }
 
-.card-inner:hover, .card-inner:active, .card-inner:focus {
+.card-small .card-inner {
+	border: 2px solid #CCC;
+	border-radius: 5px;
+	height: 80px;
+	cursor: pointer;
+	overflow:hidden;
+}
+
+.card .card-inner:hover, .card .card-inner:active, .card .card-inner:focus {
 	border: 4px solid #99D6FF;
 }
 
+.card-small .card-inner:hover, .card-small .card-inner:active, .card-small .card-inner:focus {
+	border: 2px solid #99D6FF;
+}
 
-.card-inner img.img-thumbnail {
+.card .card-inner img.img-thumbnail {
 	max-height: 250px;
 }
+
+.card-small .card-inner img.img-thumbnail {
+	max-height: 50px;
+}
+
 
 span.character-list {
 	color: blue;
@@ -95,8 +118,8 @@ figure {
 	text-align:center;
 }
 
-p.description img {
-	width: 50%;
+#description img {
+	max-width: 50%;
 }
 
 img.js-lazy-load-image {
@@ -106,6 +129,10 @@ img.js-lazy-load-image {
 
 img.logo {
 	border-radius: 4px;
+}
+
+img {
+	max-width: 100%;
 }
 
 header.header {

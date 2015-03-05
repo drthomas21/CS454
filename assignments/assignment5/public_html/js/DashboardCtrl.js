@@ -1,4 +1,4 @@
-app.controller('DashboardCtrl',['$scope','$rootScope','$http','LocationService','$timeout',function($scope,$rootScope,$http,LocationService,$timeout){
+app.controller('DashboardCtrl',['$scope','$rootScope','$http','LocationService','$timeout','HistoryService',function($scope,$rootScope,$http,LocationService,$timeout,HistoryService){
 	$scope.search = undefined;
 	$scope.characters = [];
 	var loaded = false;
@@ -53,7 +53,6 @@ app.controller('DashboardCtrl',['$scope','$rootScope','$http','LocationService',
 						}
 						
 						if(bool) {
-							console.log(data.results[i]);
 							$scope.characters.push(data.results[i]);
 						}
 						

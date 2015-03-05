@@ -1,4 +1,4 @@
-app.controller('ListCtrl',['$scope','$rootScope','$timeout','$window','LocationService',function($scope,$rootScope,$timeout,$window,LocationService){
+app.controller('ListCtrl',['$scope','$rootScope','$timeout','$window','LocationService','HistoryService',function($scope,$rootScope,$timeout,$window,LocationService,HistoryService){
 	$scope.isSearching = false;
 	$scope.Characters = [];
 	$scope.Character = null;
