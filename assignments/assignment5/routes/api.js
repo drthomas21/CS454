@@ -4,7 +4,6 @@ var superagent = require('superagent');
 
 module.exports = function(server) {
 	server.get('/api/search',function(req,res) {
-		var timestamp = (new Date()).getTime();
 		superagent
 			.get(Api.request_url+"/characters")
 			.query({"api_key":Api.api_key})
@@ -23,6 +22,28 @@ module.exports = function(server) {
 						success: true,
 						message: "",
 						results: []
+					});
+				}
+			});
+	});
+	
+	server.get('/api/character/:id',function(req,res){
+		superagent
+			.get(Api.request_url+"/character/4005-"+req.params.id)
+			.query({"api_key":Api.api_key})
+			.query({"format":"json"})
+			.end(function(error,result){
+				if(result && result.body) {
+					res.json({
+						success: result.body.error == "OK",
+						message: result.body.error,
+						character: result.body.results
+					});
+				} else {
+					res.json({
+						success: true,
+						message: "",
+						character: null
 					});
 				}
 			});
