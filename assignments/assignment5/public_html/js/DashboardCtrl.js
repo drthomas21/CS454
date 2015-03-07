@@ -1,8 +1,9 @@
-app.controller('DashboardCtrl',['$scope','$rootScope','$http','LocationService','$timeout','HistoryService',function($scope,$rootScope,$http,LocationService,$timeout,HistoryService){
+app.controller('DashboardCtrl',['$scope','$rootScope','$http','LocationService','$timeout','HistoryService','$q',function($scope,$rootScope,$http,LocationService,$timeout,HistoryService,$q){
 	$scope.search = undefined;
 	$scope.characters = [];
 	var loaded = false;
 	var names = "";
+	var canceler = $q.defer();
 	var initalSearch = ["man","iron","spide","x","wolf","ame","wolv","cy","hulk","black","ace","pika","war","mew"];
 	
 	$scope.getCharacters = function() {
@@ -26,22 +27,33 @@ app.controller('DashboardCtrl',['$scope','$rootScope','$http','LocationService',
 		return list;
 	};
 	
-	$scope.selectedCharacter = function(Characters,value) {
-		$rootScope.$broadcast('characters',Characters,value);		
+	$scope.selectedCharacter = function(Character) {
+		LocationService.setCharacterId(Character.id);
 	};
 	
-	var buildCharacterList = function(value) {
-		$scope.selectedCharacter($scope.characters,value);
+	$scope.selectedCharacters = function(Characters) {
+		$rootScope.$broadcast('characters',Characters);		
+	};
+	
+	var buildCharacterList = function() {
+		$scope.selectedCharacters($scope.characters);
 	};
 	
 	$scope.refreshCharacters = function(value,send) {
+		if(!send) {
+			send = false;
+		}
+		
 		if(value.length > 0) {
 			if(send) {
-				$rootScope.$broadcast('searching',value);
+				$rootScope.$broadcast('searching');
 				LocationService.setSearch(value);
-			}
+				LocationService.setIsSearching(true);
+				canceler.resolve();
+				canceler = $q.defer();
+			}				
 			
-			$http.get('/api/search?name='+value)
+			$http.get('/api/search?name='+value,{timeout: canceler.promise})
 			.success(function(data,status,headers,config){
 				if(data.success) {
 					for(var i = 0; i < data.results.length; i++) {
@@ -58,9 +70,10 @@ app.controller('DashboardCtrl',['$scope','$rootScope','$http','LocationService',
 						
 					}
 					if(send) {
-						buildCharacterList(value);
+						LocationService.setIsSearching(false);
+						buildCharacterList();
 					} else {
-						buildCharacterList("");
+						buildCharacterList();
 					}
 				} else {
 					$rootScope.$broadcast('error',data.message);
@@ -73,7 +86,7 @@ app.controller('DashboardCtrl',['$scope','$rootScope','$http','LocationService',
 				}
 			});
 		} else {
-			buildCharacterList("");
+			buildCharacterList();
 			if(loaded) {
 				LocationService.setSearch(null);
 			}
@@ -91,11 +104,13 @@ app.controller('DashboardCtrl',['$scope','$rootScope','$http','LocationService',
 		$scope.search = undefined;
 	});
 	
-	if(LocationService.getSearch()) {
-		$scope.refreshCharacters(LocationService.getSearch(),true);
-	} else if(!LocationService.getCharacter()) {
-		initalSearch.forEach(function(value) {
-			$scope.refreshCharacters(value);
-		});
-	}
+	$timeout(function(){
+		if(LocationService.getSearch()) {
+			$scope.refreshCharacters(LocationService.getSearch(),true);
+		} else if(!LocationService.getCharacter()) {
+			initalSearch.forEach(function(value) {
+				$scope.refreshCharacters(value);
+			});
+		}
+	},500);	
 }]);

@@ -31,6 +31,7 @@ module.exports = function(server) {
 		superagent
 			.get(Api.request_url+"/character/4005-"+req.params.id)
 			.query({"api_key":Api.api_key})
+			.query({"field_list":"aliases,name,description,deck,character_friends,character_enemies,id,powers,real_name,publisher,image,origin"})
 			.query({"format":"json"})
 			.end(function(error,result){
 				if(result && result.body) {

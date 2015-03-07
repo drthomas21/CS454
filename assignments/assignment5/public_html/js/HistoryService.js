@@ -15,39 +15,23 @@
 				return characterSearches[id];
 			}
 			
-			this.setCharacterList = function(Characters) {
-				charactersSearchers = Characters;
+			this.setCharacterList = function(Characters) {	
+				console.log("setting");
+				charactersSearches = Characters;
+				console.log(charactersSearches);
 			};
 			
 			this.getCharacterList = function() {
+				console.log("getting");
+				console.log(charactersSearches);
 				return charactersSearches;
 			};
-			
-			$rootScope.$on('characters',function(event,Characters,value){
-				if(timeout) {
-					$timeout.cancel(timeout);
-				}
-				
-				timeout = $timeout(function() {
-					charactersSearches = [];
-					if(value && value.length > 0) {
-						for(var i = 0; i < Characters.length; i++) {
-							if(Characters[i].name.indexOf(value) >= 0) {
-								charactersSearches.push(Characters[i]);
-							}
-						}
-					}
-					
-					$rootScope.$broadcast("filteredCharacters",charactersSearches);	
-				},1000);
-							
-			});
 		}
 		
 		if(!Instance) {
 			Instance = new HistoryService();
 		}
 		
-		return Instance
+		return Instance;
 	}]);
 })();

@@ -94,6 +94,12 @@ li.even {
 	max-height: 250px;
 }
 
+@media screen and (max-width: 992px) and (min-width: 768px) {
+	.card .card-inner img.img-thumbnail {
+		max-height: 200px;
+	}
+}
+
 .card-small .card-inner img.img-thumbnail {
 	max-height: 50px;
 }
@@ -147,4 +153,10 @@ div.carousel div.carousel-inner div.item img {
 }
 div.homepage {
 	
+}
+.card-description {
+	max-height: 80px;
+	min-height: 80px;
+	height: 80px;
+	overflow-y: hidden;
 }

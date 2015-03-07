@@ -6,7 +6,7 @@
 			"request_url": "http://gateway.marvel.com"
 		}, 
 		"comicvine": {
-			"api_key": "ab3b39a3f9848bc7f836a575b4762107611a9dd0",
+			"api_key": "e7a081c9961409daccecdcab01345f39d3c9a8b9",
 			"request_url": "http://www.comicvine.com/api"
 		}
 	},

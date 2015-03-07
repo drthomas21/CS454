@@ -1,9 +1,9 @@
 app.controller('ListCtrl',['$scope','$rootScope','$timeout','$window','LocationService','HistoryService',function($scope,$rootScope,$timeout,$window,LocationService,HistoryService){
-	$scope.isSearching = false;
+	var timeout = null;
 	$scope.Characters = [];
-	$scope.Character = null;
 	$scope.message = "";
 	$scope.search = "";
+	$scope.activeCardId = 0;
 	$scope.slides = [{
 		src: "/images/slides/slide-001.jpg",
 		text: "Invisible Woman"
@@ -34,65 +34,78 @@ app.controller('ListCtrl',['$scope','$rootScope','$timeout','$window','LocationS
 	});
 	$scope.textOffset = 0;
 	$scope.textValue = "Searching...";
-	var emptyCharacter = function() {
-		$scope.Characters = [];
-	};
-	
-	emptyCharacter();
 	
 	$scope.loadCard = function(Character) {
 		LocationService.setCharacterId(Character.id);
 	};
 	
+	$scope.getImage = function(Character) {
+		if(!Character || !Character.image || Character.image.length == 0) {
+			return "";
+		}
+		
+		return Character.image.medium_url || Character.image.large_url;
+	};
+	
+	$scope.setActiveCardId = function(id) {
+		$scope.activeCardId = id;
+	};
+	
+	$scope.isActiveCard = function(id,first) {
+		if(first) {
+			$scope.activeCardId = id;
+		}
+	};
+	
+	$scope.checkIsSearching = function() {
+		return LocationService.getIsSearching();
+	}
+	
 	$scope.hasNoResults = function() {
 		for(var i = 0; i < $scope.Characters.length; i++) {
-			if($scope.Characters[i].name.indexOf($scope.search) >= 0){
+			if($scope.Characters[i].name.toLowerCase().indexOf($scope.search.toLowerCase()) >= 0){
 				return false;
 			}
 		}
 		return true;
-	}
+	};
 	
 	$scope.clear = function() {
-		$scope.Character = null;
 		$scope.Characters = [];
 		$rootScope.$broadcast("clear");
 	};
 	
-	$scope.$on('searching',function(event,value){
-		$scope.isSearching = true;
-		$scope.Character = null;
-		$scope.search = value;
+	$scope.$on('searching',function(event){
+		$scope.search = LocationService.getSearch();
 	});
 	
 	$scope.$on('searchFailed',function(event,message){
-		$scope.isSearching = false;
-		$scope.Character = null;
-		emptyCharacter();
 	});
 
 	$scope.$on('error',function(event,message) {
-		$scope.isSearching = false;
 		$scope.message = message;
 	});
 	
-	$scope.$on('characters',function(event,Characters,value){
-		$scope.isSearching = false;
-		$scope.search = value;
-		if(Characters && Characters.length >= 0) {
-			$scope.Characters = Characters;
-			if(Characters.length == 1) {
-				$scope.loadCard(Characters[0]);
-			}
-		}
+	$scope.$on('characters',function(event,Characters){
+		$scope.Characters = Characters;
+		$scope.search = LocationService.getSearch();
 		
+		if($scope.search.length > 0 && $scope.Characters.length > 0) {
+			$timeout(function(){
+				var list = [];
+				for(var i = 0; i < $scope.Characters.length; i++) {
+					if($scope.Characters[i].name.toLowerCase().indexOf($scope.search.toLowerCase()) >= 0) {
+						list.push($scope.Characters[i]);
+					}
+				}
+				
+				HistoryService.setCharacterList(list);
+			},0);
+		}
 	});
 	
 	$scope.$on('clear',function() {
-		$scope.isSearching = false;
-		$scope.Character = null;
 		$scope.search = "";
 		$window.scrollTo(0,0);
-		emptyCharacter();
 	});
 }]);

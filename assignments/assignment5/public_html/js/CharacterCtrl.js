@@ -50,6 +50,16 @@ app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window','$rou
 			return string.replace(/\<a[^\>]+\>|\<\/a\>/g,"");
 		}
 		return "";
+	};
+	
+	$scope.asyncImagePull = function(Character) {
+		$http.get('/api/character/'+Character.id)
+		.success(function(data,status,headers,config){
+			if(data.success) {
+				Characterr = data.character;
+				HistoryService.addToCharacters(data.character);
+			}
+		});	
 	}
 	
 	$scope.loadCharacter = function(Character) {
@@ -62,6 +72,14 @@ app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window','$rou
 		}
 		
 		return Character.image.medium_url || Character.image.large_url;
+	};
+	
+	$scope.getSmallImage = function(Character) {
+		if(!Character || !Character.image || Character.image.length == 0) {
+			return "";
+		}
+		
+		return Character.image.icon_url || Character.image.small_url;
 	};
 	
 	$scope.getDate = function() {

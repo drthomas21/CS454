@@ -4,11 +4,24 @@
 	app.factory('LocationService',['$location','$timeout',function($location,$timeout){
 		var LocationService = function() {
 			var search = "";
+			var isSearching = false;
 			
 			var init = function() {
 				var obj = $location.search();
-				search = obj.search;
+				if(obj.search) {
+					search = obj.search;
+				} else {
+					search = "";
+				}
 			};
+			
+			this.setIsSearching = function(value) {
+				isSearching = value;
+			};
+			
+			this.getIsSearching = function() {
+				return isSearching;
+			}
 			
 			this.setSearch = function(value) {
 				if(value && typeof(value) == "string" && value.length > 0) {
@@ -16,7 +29,7 @@
 					$location.path('/');
 					$location.search('search',value);					
 				} else {
-					search = null;
+					search = "";
 					$location.search('search',null);
 				}
 			};
