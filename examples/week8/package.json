@@ -1,0 +1,14 @@
+{
+  "name": "week8",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "chai": "~2.1.1"
+  }
+}
