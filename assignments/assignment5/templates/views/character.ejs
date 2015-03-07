@@ -16,15 +16,25 @@
         		</div>
 			</div>
 		</div>
-		<div class="row col-lg-12">			
-			<h2 style="text-align:center">{{Character.name}} <br /><small>{{Character.real_name}}</small></h2>
-			<img ng-src="{{getImage(Character)}}" alt="{{Character.name}}" class="img-thumbnail center-block details" />
+		<div class="row col-lg-12">
+			<div class="col-md-8">
+				<h2 style="text-align:center">{{Character.name}} <br /><small>{{Character.real_name}}</small></h2>
+				<img ng-src="{{getImage(Character)}}" alt="{{Character.name}}" class="img-thumbnail center-block details" />
+			</div>
+			<div class="col-md-4">
+				<ul class="list-unstyled" style="margin-top: 90px;">
+					<li><strong>Publisher: </strong>{{Character.publisher.name}}</li>
+					<li><strong>Race: </strong>{{Character.origin.name}}</li>
+					<li ng-show="Character.real_name && Character.real_name.length > 0"><strong>Real Name: </strong>{{Character.real_name}}</li>
+				</ul>
+			</div>
 		</div>
 		<div class="row col-lg-12 character-tabs">
 			<ul class="nav nav-tabs" role="tablist">
 				<li role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Description</a></li>
 				<li role="presentation"><a href="#friends" aria-controls="friends" role="tab" data-toggle="tab">Friends</a></li>
 				<li role="presentation"><a href="#enemies" aria-controls="enemies" role="tab" data-toggle="tab">Enemies</a></li>
+				<li role="presentation"><a href="#powers" aria-controls="powers" role="tab" data-toggle="tab">Powers</a></li>
 			</ul>
 			
 			<div class="tab-content">
@@ -35,7 +45,6 @@
 					<ul class="list-inline">
 						<li class="list-group-item" ng-repeat="Friend in Character.character_friends">
 							<a ng-href="{{Friend.id}}" ng-click="loadCharacter(Friend)">
-								<img ng-src="{{getSmallImage(Friend)}}" alt="{{Friend.name}}" class="img-thumbnail center-block details" />
 								<h4 style="text-align:center">{{Friend.name}}</h4>
 							</a>
 						</li>
@@ -47,6 +56,13 @@
 							<a ng-href="{{Enemy.id}}" ng-click="loadCharacter(Enemy)">
 								<h4 style="text-align:center">{{Enemy.name}}</h4>
 							</a>
+						</li>
+					</ul>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="powers">
+					<ul class="list-inline">
+						<li class="list-group-item" ng-repeat="Power in Character.powers">
+							<h4 style="text-align:center">{{Power.name}}</h4>
 						</li>
 					</ul>
 				</div>
