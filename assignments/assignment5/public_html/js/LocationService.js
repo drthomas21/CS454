@@ -48,6 +48,14 @@
 				}
 			};
 			
+			this.setVersusCharacterId = function(id1,id2) {
+				if(parseInt(id1) > 0 && parseInt(id2) > 0) {
+					search = null;
+					$location.search('id',[id1,id2]);
+					$location.path("/versus");
+				}
+			};
+			
 			this.getCharacter = function() {
 				return $location.path().replace(/[^0-9]/,'');
 			}

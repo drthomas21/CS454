@@ -8,4 +8,7 @@ module.exports = function(server) {
 	server.get('/views/:view',function(req,res){
 		res.render('views/'+req.params.view);
 	});
+	server.get('/versus/',function(req,res){
+		res.render('views/versus');
+	});
 };

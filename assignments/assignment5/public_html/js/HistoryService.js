@@ -16,14 +16,10 @@
 			}
 			
 			this.setCharacterList = function(Characters) {	
-				console.log("setting");
 				charactersSearches = Characters;
-				console.log(charactersSearches);
 			};
 			
 			this.getCharacterList = function() {
-				console.log("getting");
-				console.log(charactersSearches);
 				return charactersSearches;
 			};
 		}

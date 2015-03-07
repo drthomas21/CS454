@@ -66,6 +66,10 @@ app.controller('CharacterCtrl',['$scope','$rootScope','$timeout','$window','$rou
 		LocationService.setCharacterId(Character.id);
 	};
 	
+	$scope.loadVersus = function(Character) {
+		LocationService.setVersusCharacterId($scope.Character.id,Character.id);
+	};
+	
 	$scope.getImage = function(Character) {
 		if(!Character || !Character.image || Character.image.length == 0) {
 			return "";
