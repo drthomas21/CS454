@@ -1,0 +1,11 @@
+testing - Mocha
+BDD and TDD - Chai
+Chai
+- assert => TDD
+- expect => BDD
+- should => BDD
+
+Additional Tools
+- supertest - test api calls
+- sinon -- fakes api calls
+- rewire - able to test private functions
