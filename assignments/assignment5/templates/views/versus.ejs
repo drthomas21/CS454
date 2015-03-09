@@ -1,0 +1,94 @@
+<div class='container' style="min-height: 600px; border-top-right-radius: 0px; border-top-left-radius: 0px;padding-bottom:50px">
+	<div ng-show="message">
+		<div class="alert alert-danger" ng-bind="message"></div>
+	</div>
+	<div ng-show="Characters.length > 1" class="col-lg-12">
+		<table class="table table-bordered">
+			<tr><th colspan="{{count}}" class="text-center">Name</th></tr>
+			<tr>
+				<td ng-repeat="Character in Characters">
+					<div class="col-lg-12"><a ng-href="{{Character.id}}" ng-click="loadCharacter(Character)">{{Character.name}}</a></div>
+				</td>
+			</tr>
+			<tr>
+				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
+					<div class="col-lg-12"><img ng-src="{{getSmallImage(Character)}}" class="center-block text-center img-responsive" /></div>
+				</td>
+			</tr>
+			<!-- | -->
+			<tr><th colspan="{{count}}" class="text-center">Description</th></tr>
+			<tr>
+				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
+					<div class="col-lg-12">{{Character.deck}}</div>
+				</td>
+			</tr>
+			<!-- | -->
+			<tr><th colspan="{{count}}" class="text-center"># Of Friends</th></tr>
+			<tr>
+				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
+					<div class="col-lg-12">{{Character.friends.length}}</div>
+				</td>
+			</tr>
+			<tr>
+				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
+					<div class="col-lg-12">
+						<ul class="list-unstyled">
+							<li ng-repeat="Friend in Character.friends.list">
+								<div class="col-lg-12"><a ng-href="{{Friend.id}}" ng-click="loadCharacter(Friend)">{{Friend.name}}</a></div>
+							</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			<!-- | -->
+			<tr><th colspan="{{count}}" class="text-center"># Of Enemies</th></tr>
+			<tr>
+				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
+					<div class="col-lg-12">{{Character.enemies.length}}</div>
+				</td>
+			</tr>
+			<tr>
+				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
+					<div class="col-lg-12">
+						<ul class="list-unstyled">
+							<li ng-repeat="Enemy in Character.enemies.list">
+								<div class="col-lg-12"><a ng-href="{{Enemy.id}}" ng-click="loadCharacter(Enemy)">{{Enemy.name}}</a></div>
+							</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			<!-- | -->
+			<tr><th colspan="{{count}}" class="text-center"># Of Powers</th></tr>
+			<tr>
+				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
+					<div class="col-lg-12">{{Character.powers.length}}</div>
+				</td>
+			</tr>
+			<tr>
+				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
+					<div class="col-lg-12">
+						<ul class="list-unstyled">
+							<li ng-repeat="Power in Character.powers.list">
+								<div class="col-lg-12">{{Power.name}}</div>
+							</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div ng-show="Characters.length == 0 && !searching" class="col-lg-12 center-block">        	
+		<img src="/images/trapped-001.jpg" class="img-rounded center-block" />
+		<div class="col-lg-12" style="text-align: center">
+			<h2>Cannot Find Your Character? It's A Trap!</h2>
+		</div>
+	</div>
+	<div ng-show="Characters.length == 0 && searching" class="col-lg-12 center-block">        	
+		<img src="/images/searching-001.png" class="img-rounded center-block" />
+		<div class="col-lg-12" style="text-align: center">
+			<h2>Searching For Your Character As Fast As We Can</h2>
+		</div>
+	</div>
+</div>
+

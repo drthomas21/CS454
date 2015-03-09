@@ -2,6 +2,12 @@ app.controller('VersusCtrl',['$scope','$rootScope','$timeout','$window','$routeP
 	$scope.message = null;
 	$scope.Characters = [];
 	$scope.searching = false;
+	var limits = {
+			friends: 10,
+			enemies: 10,
+			powers: 5
+	};
+	$scope.count = 0;
 	
 	var init = function() {
 		$scope.searching = true;
@@ -13,11 +19,16 @@ app.controller('VersusCtrl',['$scope','$rootScope','$timeout','$window','$routeP
 					$http.get('/api/character/'+id)
 					.success(function(data,status,headers,config){
 						if(data.success) {
-							Character = data.character;
-							HistoryService.addToCharacters(Character);
-							$scope.Characters.push(Character);
+							var temp = data.character;
+							HistoryService.addToCharacters(temp);
+							$scope.Characters.push(formatCharacter(temp));
 							if($scope.Characters.length == ids.length)  {
 								$scope.searching = false;
+								$scope.count = $scope.Characters.length;
+								if($scope.count > 6) {
+									$scope.count = 6;
+									$scope.Characters.splice(0,6);
+								}
 							}
 						} else {		
 							$scope.message = data.message
@@ -29,11 +40,39 @@ app.controller('VersusCtrl',['$scope','$rootScope','$timeout','$window','$routeP
 						}
 					});	
 				} else {
-					$scope.Characters.push(Character);
+					$scope.Characters.push(formatCharacter(Character));
 				}
 			});
 		}
 	};
+	
+	var formatCharacter = function(Character) {
+		Character.friends = {
+			length: Character.character_friends.length,
+			list: Character.character_friends.splice(0,limits.friends)
+		};
+		
+		Character.enemies = {
+			length: Character.character_enemies.length,
+			list: Character.character_enemies.splice(0,limits.enemies)
+		};
+		
+		Character.powers = {
+			length: Character.powers.length,
+			list: Character.powers.splice(0,limits.powers)
+		};
+		
+		return Character;
+	};
+	
+	$scope.getClassName = function() {
+		var colSpan = 2;
+		if($scope.Characters.length <= 6) {
+			colSpan = Math.floor(12 / $scope.Characters.length);
+		}
+		
+		return "col-md-"+colSpan;
+	}
 	
 	$scope.filterLinks = function(string) {
 		if(typeof(string) == "string") {

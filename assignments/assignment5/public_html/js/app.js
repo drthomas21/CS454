@@ -6,13 +6,13 @@ var app = angular.module('app',['ngSanitize','ngRoute','ui.select'])
 		templateUrl: 'views/list',
 		controller: 'ListCtrl'
 	})
+	.when('/versus',{
+                templateUrl: 'views/versus',
+                controller: 'VersusCtrl'
+        })
 	.when('/:id',{
 		templateUrl: 'views/character',
 		controller: 'CharacterCtrl'
-	})
-	.when('/versus',{
-		templateUrl: 'views/versus',
-		controller: 'VersusCtrl'
 	})
 	.otherwise({
 		redirectTo: '/'

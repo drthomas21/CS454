@@ -4,6 +4,7 @@
 	app.factory('LocationService',['$location','$timeout',function($location,$timeout){
 		var LocationService = function() {
 			var search = "";
+			var ids = [];
 			var isSearching = false;
 			
 			var init = function() {
@@ -12,6 +13,12 @@
 					search = obj.search;
 				} else {
 					search = "";
+				}
+				
+				if(obj.id) {
+					ids = obj.id;
+				} else {
+					ids = [];
 				}
 			};
 			
@@ -51,10 +58,15 @@
 			this.setVersusCharacterId = function(id1,id2) {
 				if(parseInt(id1) > 0 && parseInt(id2) > 0) {
 					search = null;
-					$location.search('id',[id1,id2]);
+					ids = [id1,id2];
+					$location.search('id',ids);
 					$location.path("/versus");
 				}
 			};
+			
+			this.getVersusCharacterIds = function() {
+				return ids
+			}
 			
 			this.getCharacter = function() {
 				return $location.path().replace(/[^0-9]/,'');

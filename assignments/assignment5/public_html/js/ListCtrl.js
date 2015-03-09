@@ -90,7 +90,7 @@ app.controller('ListCtrl',['$scope','$rootScope','$timeout','$window','LocationS
 		$scope.Characters = Characters;
 		$scope.search = LocationService.getSearch();
 		
-		if($scope.search.length > 0 && $scope.Characters.length > 0) {
+		if($scope.search && $scope.search.length > 0 && $scope.Characters.length > 0) {
 			$timeout(function(){
 				var list = [];
 				for(var i = 0; i < $scope.Characters.length; i++) {
