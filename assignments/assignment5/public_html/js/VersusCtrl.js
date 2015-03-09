@@ -5,7 +5,8 @@ app.controller('VersusCtrl',['$scope','$rootScope','$timeout','$window','$routeP
 	var limits = {
 			friends: 10,
 			enemies: 10,
-			powers: 5
+			powers: 5,
+			teams: 3
 	};
 	$scope.count = 0;
 	
@@ -61,6 +62,11 @@ app.controller('VersusCtrl',['$scope','$rootScope','$timeout','$window','$routeP
 			length: Character.powers.length,
 			list: Character.powers.splice(0,limits.powers)
 		};
+		
+		Character.teams = {
+				length: Character.teams.length,
+				list: Character.teams.splice(0,limits.teams)
+			};
 		
 		return Character;
 	};

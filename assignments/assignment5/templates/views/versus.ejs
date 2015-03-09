@@ -2,7 +2,7 @@
 	<div ng-show="message">
 		<div class="alert alert-danger" ng-bind="message"></div>
 	</div>
-	<div ng-show="Characters.length > 1" class="col-lg-12">
+	<div ng-show="Characters.length > 1 && !searching" class="col-lg-12">
 		<table class="table table-bordered">
 			<tr><th colspan="{{count}}" class="text-center">Name</th></tr>
 			<tr>
@@ -13,6 +13,13 @@
 			<tr>
 				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
 					<div class="col-lg-12"><img ng-src="{{getSmallImage(Character)}}" class="center-block text-center img-responsive" /></div>
+				</td>
+			</tr>
+			<!-- | -->
+			<tr><th colspan="{{count}}" class="text-center">Race</th></tr>
+			<tr>
+				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
+					<div class="col-lg-12">{{Character.origin.name}}</div>
 				</td>
 			</tr>
 			<!-- | -->
@@ -71,6 +78,24 @@
 						<ul class="list-unstyled">
 							<li ng-repeat="Power in Character.powers.list">
 								<div class="col-lg-12">{{Power.name}}</div>
+							</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			<!-- | -->
+			<tr><th colspan="{{count}}" class="text-center"># Of Teams</th></tr>
+			<tr>
+				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
+					<div class="col-lg-12">{{Character.teams.length}}</div>
+				</td>
+			</tr>
+			<tr>
+				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
+					<div class="col-lg-12">
+						<ul class="list-unstyled">
+							<li ng-repeat="Team in Character.teams.list">
+								<div class="col-lg-12">{{Team.name}}</div>
 							</li>
 						</ul>
 					</div>

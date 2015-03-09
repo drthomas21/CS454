@@ -8,6 +8,7 @@ module.exports = function(server) {
 			.get(Api.request_url+"/characters")
 			.query({"api_key":Api.api_key})
 			.query({"filter":"name:"+req.query.name})
+			.query({"field_list":"aliases,name,deck,id,real_name,image"})
 			.query({"limit":20})
 			.query({"format":"json"})
 			.end(function(error,result) {
@@ -31,7 +32,7 @@ module.exports = function(server) {
 		superagent
 			.get(Api.request_url+"/character/4005-"+req.params.id)
 			.query({"api_key":Api.api_key})
-			.query({"field_list":"aliases,name,description,deck,character_friends,character_enemies,id,powers,real_name,publisher,image,origin"})
+			.query({"field_list":"aliases,name,description,deck,character_friends,character_enemies,id,powers,real_name,publisher,image,origin,teams"})
 			.query({"format":"json"})
 			.end(function(error,result){
 				if(result && result.body) {

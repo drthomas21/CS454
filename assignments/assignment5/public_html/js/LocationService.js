@@ -34,7 +34,9 @@
 				if(value && typeof(value) == "string" && value.length > 0) {
 					search = value;	
 					$location.path('/');
-					$location.search('search',value);					
+					ids = [];
+					$location.search('id',null);
+					$location.search('search',value);	
 				} else {
 					search = "";
 					$location.search('search',null);
@@ -48,10 +50,16 @@
 			this.setCharacterId = function(value) {
 				if(value && parseInt(value) > 0) {
 					search = null;
-					$location.search('search',null);
+					ids = [];
+					$location.search('id',null);
+					$location.search('search',null);					
 					$location.path("/"+parseInt(value));
+					$location.replace();
 				} else {
+					ids = [];
+					$location.search('id',null);
 					$location.path("/");
+					$location.replace();
 				}
 			};
 			
@@ -61,6 +69,7 @@
 					ids = [id1,id2];
 					$location.search('id',ids);
 					$location.path("/versus");
+					$location.replace();
 				}
 			};
 			
