@@ -16,6 +16,13 @@
 				</td>
 			</tr>
 			<!-- | -->
+			<tr><th colspan="{{count}}" class="text-center">Publisher</th></tr>
+			<tr>
+				<td ng-repeate="Character in Characters" class="{{getClassName()}}">
+					<div class="col-lg-12">{{Character.publisher.name}}</div>
+				</td>
+			</tr>
+			<!-- | -->
 			<tr><th colspan="{{count}}" class="text-center">Race</th></tr>
 			<tr>
 				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
