@@ -18,7 +18,7 @@
 			<!-- | -->
 			<tr><th colspan="{{count}}" class="text-center">Publisher</th></tr>
 			<tr>
-				<td ng-repeate="Character in Characters" class="{{getClassName()}}">
+				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
 					<div class="col-lg-12">{{Character.publisher.name}}</div>
 				</td>
 			</tr>
@@ -37,10 +37,10 @@
 				</td>
 			</tr>
 			<!-- | -->
-			<tr><th colspan="{{count}}" class="text-center"># Of Friends</th></tr>
+			<tr><th colspan="{{count}}" class="text-center">Friends</th></tr>
 			<tr>
 				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
-					<div class="col-lg-12">{{Character.friends.length}}</div>
+					<div class="col-lg-12"># Of Friends: {{Character.friends.length}}</div>
 				</td>
 			</tr>
 			<tr>
@@ -55,10 +55,10 @@
 				</td>
 			</tr>
 			<!-- | -->
-			<tr><th colspan="{{count}}" class="text-center"># Of Enemies</th></tr>
+			<tr><th colspan="{{count}}" class="text-center">Enemies</th></tr>
 			<tr>
 				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
-					<div class="col-lg-12">{{Character.enemies.length}}</div>
+					<div class="col-lg-12"># Of Enemies: {{Character.enemies.length}}</div>
 				</td>
 			</tr>
 			<tr>
@@ -73,10 +73,10 @@
 				</td>
 			</tr>
 			<!-- | -->
-			<tr><th colspan="{{count}}" class="text-center"># Of Powers</th></tr>
+			<tr><th colspan="{{count}}" class="text-center">Powers</th></tr>
 			<tr>
 				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
-					<div class="col-lg-12">{{Character.powers.length}}</div>
+					<div class="col-lg-12"># Of Powers: {{Character.powers.length}}</div>
 				</td>
 			</tr>
 			<tr>
@@ -91,10 +91,10 @@
 				</td>
 			</tr>
 			<!-- | -->
-			<tr><th colspan="{{count}}" class="text-center"># Of Teams</th></tr>
+			<tr><th colspan="{{count}}" class="text-center">Teams</th></tr>
 			<tr>
 				<td ng-repeat="Character in Characters" class="{{getClassName()}}">
-					<div class="col-lg-12">{{Character.teams.length}}</div>
+					<div class="col-lg-12"># Of Teams: {{Character.teams.length}}</div>
 				</td>
 			</tr>
 			<tr>
